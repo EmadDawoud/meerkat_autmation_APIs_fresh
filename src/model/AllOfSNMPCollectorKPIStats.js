@@ -13,8 +13,8 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from '../ApiClient';
-import {KPIStats} from './KPIStats';
+import {ApiClient} from '../ApiClient.js';
+import {KPIStats} from './KPIStats.js';
 
 /**
  * The AllOfSNMPCollectorKPIStats model module.

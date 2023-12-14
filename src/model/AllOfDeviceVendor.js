@@ -13,8 +13,8 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from '../ApiClient';
-import {Vendor} from './Vendor';
+import {ApiClient} from '../ApiClient.js';
+import {Vendor} from './Vendor.js';
 
 /**
  * The AllOfDeviceVendor model module.

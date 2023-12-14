@@ -13,8 +13,8 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from "../ApiClient";
-import {CommunityStr} from '../model/CommunityStr';
+import {ApiClient} from "../ApiClient.js";
+import {CommunityStr} from '../model/CommunityStr.js';
 
 /**
 * CommunityStr service.

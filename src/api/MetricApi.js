@@ -13,8 +13,8 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from "../ApiClient";
-import {Metric} from '../model/Metric';
+import {ApiClient} from "../ApiClient.js";
+import {Metric} from '../model/Metric.js';
 
 /**
 * Metric service.

@@ -13,8 +13,8 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from "../ApiClient";
-import {SNMPCollector} from '../model/SNMPCollector';
+import {ApiClient} from "../ApiClient.js";
+import {SNMPCollector} from '../model/SNMPCollector.js';
 
 /**
 * SNMPCollector service.

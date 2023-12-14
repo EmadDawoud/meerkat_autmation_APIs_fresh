@@ -13,8 +13,8 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from '../ApiClient';
-import {Metric} from './Metric';
+import {ApiClient} from '../ApiClient.js';
+import {Metric} from './Metric.js';
 
 /**
  * The MonObj model module.

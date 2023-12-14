@@ -13,8 +13,8 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from '../ApiClient';
-import {SNMPCollector} from './SNMPCollector';
+import {ApiClient} from '../ApiClient.js';
+import {SNMPCollector} from './SNMPCollector.js';
 
 /**
  * The AllOfDeviceSNMPCollector model module.

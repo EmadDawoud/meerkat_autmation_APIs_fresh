@@ -13,8 +13,8 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from "../ApiClient";
-import {CollectorVM} from '../model/CollectorVM';
+import {ApiClient} from "../ApiClient.js";
+import {CollectorVM} from '../model/CollectorVM.js';
 
 /**
 * CollectorVM service.

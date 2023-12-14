@@ -13,8 +13,8 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from "../ApiClient";
-import {Vendor} from '../model/Vendor';
+import {ApiClient} from "../ApiClient.js";
+import {Vendor} from '../model/Vendor.js';
 
 /**
 * Vendor service.

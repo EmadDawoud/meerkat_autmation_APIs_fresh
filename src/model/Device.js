@@ -13,8 +13,8 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from '../ApiClient';
-import {MonObj} from './MonObj';
+import {ApiClient} from '../ApiClient.js';
+import {MonObj} from './MonObj.js';
 
 /**
  * The Device model module.

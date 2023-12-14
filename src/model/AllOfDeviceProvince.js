@@ -13,8 +13,8 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from '../ApiClient';
-import {Province} from './Province';
+import {ApiClient} from '../ApiClient.js';
+import {Province} from './Province.js';
 
 /**
  * The AllOfDeviceProvince model module.

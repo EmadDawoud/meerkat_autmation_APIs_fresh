@@ -13,8 +13,8 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from "../ApiClient";
-import {MonObj} from '../model/MonObj';
+import {ApiClient} from "../ApiClient.js";
+import {MonObj} from '../model/MonObj.js';
 
 /**
 * MonObj service.

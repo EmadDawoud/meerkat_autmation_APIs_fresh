@@ -13,8 +13,8 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from '../ApiClient';
-import {SNMPMIB} from './SNMPMIB';
+import {ApiClient} from '../ApiClient.js';
+import {SNMPMIB} from './SNMPMIB.js';
 
 /**
  * The AllOfMetricSNMPMIB model module.

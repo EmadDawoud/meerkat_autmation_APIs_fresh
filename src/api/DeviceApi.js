@@ -13,8 +13,8 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from "../ApiClient";
-import {Device} from '../model/Device';
+import {ApiClient} from "../ApiClient.js";
+import {Device} from '../model/Device.js';
 
 /**
 * Device service.

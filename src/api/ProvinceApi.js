@@ -13,8 +13,8 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from "../ApiClient";
-import {Province} from '../model/Province';
+import {ApiClient} from "../ApiClient.js";
+import {Province} from '../model/Province.js';
 
 /**
 * Province service.

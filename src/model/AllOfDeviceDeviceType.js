@@ -13,8 +13,8 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from '../ApiClient';
-import {DeviceType} from './DeviceType';
+import {ApiClient} from '../ApiClient.js';
+import {DeviceType} from './DeviceType.js';
 
 /**
  * The AllOfDeviceDeviceType model module.

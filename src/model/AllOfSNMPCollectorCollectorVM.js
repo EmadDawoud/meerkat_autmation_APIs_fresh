@@ -13,8 +13,8 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from '../ApiClient';
-import {CollectorVM} from './CollectorVM';
+import {ApiClient} from '../ApiClient.js';
+import {CollectorVM} from './CollectorVM.js';
 
 /**
  * The AllOfSNMPCollectorCollectorVM model module.
