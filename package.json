@@ -4,7 +4,7 @@
   "description": "This_API_for_quering_and_adding_Meerkat_SNMP_Devices",
   "license": "Apache 2.0",
   "main": "src/index.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "test": "mocha --require @babel/register --recursive"
   },
@@ -37,6 +37,7 @@
     "@babel/register": "^7.0.0",
     "expect.js": "^0.3.1",
     "mocha": "^8.0.1",
+    "rollup": "^4.9.5",
     "sinon": "^7.2.0"
   }
 }
