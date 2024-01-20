@@ -5,6 +5,10 @@
   "license": "Apache 2.0",
   "main": "src/index.js",
   "type": "module",
+  "exports": {
+    "import": "./index.js",
+    "require": "./index.cjs"
+  }
   "scripts": {
     "test": "mocha --require @babel/register --recursive"
   },
