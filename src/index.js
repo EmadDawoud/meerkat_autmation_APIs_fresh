@@ -36,7 +36,7 @@ import { MetricApi } from "./api/MetricApi.js";
 import { MonObjApi } from "./api/MonObjApi.js";
 import { ProvinceApi } from "./api/ProvinceApi.js";
 import { SNMPCollectorApi } from "./api/SNMPCollectorApi.js";
-import { SNMPMIBApi } from "./api/SNMPMIBAp.js";
+import { SNMPMIBApi } from "./api/SNMPMIBApi.js";
 import { VendorApi } from "./api/VendorApi.js";
 /**
  * This_API_for_quering_and_adding_Meerkat_SNMP_Devices.<br>

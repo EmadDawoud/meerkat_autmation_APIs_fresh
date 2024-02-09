@@ -1,0 +1,31 @@
+updating the packege to support ES module operation by updating package.json to have type: module and update all the .js files in src to refer to import the exact .js file name
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Thu Feb 8 16:04:44 2024 -0800
+#
+# On branch V2.0.0
+# Your branch and 'origin/V2.0.0' have diverged,
+# and have 1 and 1 different commits each, respectively.
+#   (use "git pull" to merge the remote branch into yours)
+#
+# Changes to be committed:
+#	modified:   package.json
+#	modified:   src/api/VendorApi.js
+#	modified:   src/index.js
+#	modified:   src/model/AllOfDeviceSNMPCollector.js
+#	modified:   src/model/AllOfMetricSNMPMIB.js
+#	modified:   src/model/AllOfMonObjSNMPMIB.js
+#	modified:   src/model/AllOfSNMPCollectorCollectorVM.js
+#	modified:   src/model/CollectorVM.js
+#	modified:   src/model/CommunityStr.js
+#	modified:   src/model/Device.js
+#	modified:   src/model/DeviceType.js
+#	modified:   src/model/Metric.js
+#	modified:   src/model/MonObj.js
+#	modified:   src/model/Province.js
+#	modified:   src/model/SNMPCollector.js
+#	modified:   src/model/SNMPMIB.js
+#	modified:   src/model/Vendor.js
+#
