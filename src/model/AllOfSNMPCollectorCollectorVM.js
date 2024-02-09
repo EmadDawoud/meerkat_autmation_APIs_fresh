@@ -13,8 +13,8 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from '../ApiClient';
-import {CollectorVM} from './CollectorVM';
+import { ApiClient } from "../ApiClient.js";
+import { CollectorVM } from "./CollectorVM.js";
 
 /**
  * The AllOfSNMPCollectorCollectorVM model module.
@@ -27,8 +27,7 @@ export class AllOfSNMPCollectorCollectorVM {
    * @alias module:model/AllOfSNMPCollectorCollectorVM
    * @class
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Constructs a <code>AllOfSNMPCollectorCollectorVM</code> from a plain JavaScript object, optionally creating a new instance.
@@ -40,14 +39,14 @@ export class AllOfSNMPCollectorCollectorVM {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new AllOfSNMPCollectorCollectorVM();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('ip'))
-        obj.ip = ApiClient.convertToType(data['ip'], 'String');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
-      if (data.hasOwnProperty('province'))
-        obj.province = ApiClient.convertToType(data['province'], 'String');
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("ip"))
+        obj.ip = ApiClient.convertToType(data["ip"], "String");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
+      if (data.hasOwnProperty("province"))
+        obj.province = ApiClient.convertToType(data["province"], "String");
     }
     return obj;
   }
@@ -76,4 +75,3 @@ AllOfSNMPCollectorCollectorVM.prototype.name = undefined;
  * @member {String} province
  */
 AllOfSNMPCollectorCollectorVM.prototype.province = undefined;
-

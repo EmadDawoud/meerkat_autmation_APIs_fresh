@@ -13,8 +13,8 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from '../ApiClient';
-import {SNMPMIB} from './SNMPMIB';
+import { ApiClient } from "../ApiClient.js";
+import { SNMPMIB } from "./SNMPMIB.js";
 
 /**
  * The AllOfMonObjSNMPMIB model module.
@@ -27,8 +27,7 @@ export class AllOfMonObjSNMPMIB {
    * @alias module:model/AllOfMonObjSNMPMIB
    * @class
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Constructs a <code>AllOfMonObjSNMPMIB</code> from a plain JavaScript object, optionally creating a new instance.
@@ -40,12 +39,12 @@ export class AllOfMonObjSNMPMIB {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new AllOfMonObjSNMPMIB();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
-      if (data.hasOwnProperty('file'))
-        obj.file = ApiClient.convertToType(data['file'], 'String');
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
+      if (data.hasOwnProperty("file"))
+        obj.file = ApiClient.convertToType(data["file"], "String");
     }
     return obj;
   }
@@ -68,4 +67,3 @@ AllOfMonObjSNMPMIB.prototype.name = undefined;
  * @member {String} file
  */
 AllOfMonObjSNMPMIB.prototype.file = undefined;
-

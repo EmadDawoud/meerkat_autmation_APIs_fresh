@@ -13,7 +13,7 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from '../ApiClient';
+import { ApiClient } from "../ApiClient.js";
 
 /**
  * The Metric model module.
@@ -25,7 +25,7 @@ export class Metric {
    * Constructs a new <code>Metric</code>.
    * @alias module:model/Metric
    * @class
-   * @param sNMPMIB {Object} 
+   * @param sNMPMIB {Object}
    */
   constructor(sNMPMIB) {
     this.sNMPMIB = sNMPMIB;
@@ -41,18 +41,18 @@ export class Metric {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new Metric();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
-      if (data.hasOwnProperty('snmpmib'))
-        obj.snmpmib = ApiClient.convertToType(data['snmpmib'], 'String');
-      if (data.hasOwnProperty('oid'))
-        obj.oid = ApiClient.convertToType(data['oid'], 'String');
-      if (data.hasOwnProperty('monobj'))
-        obj.monobj = ApiClient.convertToType(data['monobj'], 'String');
-      if (data.hasOwnProperty('sNMPMIB'))
-        obj.sNMPMIB = ApiClient.convertToType(data['sNMPMIB'], Object);
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
+      if (data.hasOwnProperty("snmpmib"))
+        obj.snmpmib = ApiClient.convertToType(data["snmpmib"], "String");
+      if (data.hasOwnProperty("oid"))
+        obj.oid = ApiClient.convertToType(data["oid"], "String");
+      if (data.hasOwnProperty("monobj"))
+        obj.monobj = ApiClient.convertToType(data["monobj"], "String");
+      if (data.hasOwnProperty("sNMPMIB"))
+        obj.sNMPMIB = ApiClient.convertToType(data["sNMPMIB"], Object);
     }
     return obj;
   }
@@ -92,4 +92,3 @@ Metric.prototype.monobj = undefined;
  * @member {Object} sNMPMIB
  */
 Metric.prototype.sNMPMIB = undefined;
-

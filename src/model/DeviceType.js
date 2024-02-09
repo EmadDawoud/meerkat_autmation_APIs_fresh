@@ -13,7 +13,7 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from '../ApiClient';
+import { ApiClient } from "../ApiClient.js";
 
 /**
  * The DeviceType model module.
@@ -26,8 +26,7 @@ export class DeviceType {
    * @alias module:model/DeviceType
    * @class
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Constructs a <code>DeviceType</code> from a plain JavaScript object, optionally creating a new instance.
@@ -39,10 +38,10 @@ export class DeviceType {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new DeviceType();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
     }
     return obj;
   }
@@ -59,4 +58,3 @@ DeviceType.prototype.id = undefined;
  * @member {String} name
  */
 DeviceType.prototype.name = undefined;
-

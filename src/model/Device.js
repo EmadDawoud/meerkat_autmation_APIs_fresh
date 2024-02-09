@@ -13,7 +13,7 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from '../ApiClient';
+import { ApiClient } from "../ApiClient.js";
 
 /**
  * The Device model module.
@@ -25,7 +25,7 @@ export class Device {
    * Constructs a new <code>Device</code>.
    * @alias module:model/Device
    * @class
-   * @param sNMPCollector {Object} 
+   * @param sNMPCollector {Object}
    */
   constructor(sNMPCollector) {
     this.sNMPCollector = sNMPCollector;
@@ -41,32 +41,41 @@ export class Device {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new Device();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
-      if (data.hasOwnProperty('wname'))
-        obj.wname = ApiClient.convertToType(data['wname'], 'String');
-      if (data.hasOwnProperty('model'))
-        obj.model = ApiClient.convertToType(data['model'], 'String');
-      if (data.hasOwnProperty('vendor'))
-        obj.vendor = ApiClient.convertToType(data['vendor'], 'String');
-      if (data.hasOwnProperty('ip'))
-        obj.ip = ApiClient.convertToType(data['ip'], 'String');
-      if (data.hasOwnProperty('communitystr'))
-        obj.communitystr = ApiClient.convertToType(data['communitystr'], 'String');
-      if (data.hasOwnProperty('devicetype'))
-        obj.devicetype = ApiClient.convertToType(data['devicetype'], 'String');
-      if (data.hasOwnProperty('province'))
-        obj.province = ApiClient.convertToType(data['province'], 'String');
-      if (data.hasOwnProperty('snmpcollector'))
-        obj.snmpcollector = ApiClient.convertToType(data['snmpcollector'], 'String');
-      if (data.hasOwnProperty('kpinum'))
-        obj.kpinum = ApiClient.convertToType(data['kpinum'], 'Number');
-      if (data.hasOwnProperty('monobj'))
-        obj.monobj = ApiClient.convertToType(data['monobj'], 'String');
-      if (data.hasOwnProperty('sNMPCollector'))
-        obj.sNMPCollector = ApiClient.convertToType(data['sNMPCollector'], Object);
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
+      if (data.hasOwnProperty("wname"))
+        obj.wname = ApiClient.convertToType(data["wname"], "String");
+      if (data.hasOwnProperty("model"))
+        obj.model = ApiClient.convertToType(data["model"], "String");
+      if (data.hasOwnProperty("vendor"))
+        obj.vendor = ApiClient.convertToType(data["vendor"], "String");
+      if (data.hasOwnProperty("ip"))
+        obj.ip = ApiClient.convertToType(data["ip"], "String");
+      if (data.hasOwnProperty("communitystr"))
+        obj.communitystr = ApiClient.convertToType(
+          data["communitystr"],
+          "String"
+        );
+      if (data.hasOwnProperty("devicetype"))
+        obj.devicetype = ApiClient.convertToType(data["devicetype"], "String");
+      if (data.hasOwnProperty("province"))
+        obj.province = ApiClient.convertToType(data["province"], "String");
+      if (data.hasOwnProperty("snmpcollector"))
+        obj.snmpcollector = ApiClient.convertToType(
+          data["snmpcollector"],
+          "String"
+        );
+      if (data.hasOwnProperty("kpinum"))
+        obj.kpinum = ApiClient.convertToType(data["kpinum"], "Number");
+      if (data.hasOwnProperty("monobj"))
+        obj.monobj = ApiClient.convertToType(data["monobj"], "String");
+      if (data.hasOwnProperty("sNMPCollector"))
+        obj.sNMPCollector = ApiClient.convertToType(
+          data["sNMPCollector"],
+          Object
+        );
     }
     return obj;
   }
@@ -148,4 +157,3 @@ Device.prototype.monobj = undefined;
  * @member {Object} sNMPCollector
  */
 Device.prototype.sNMPCollector = undefined;
-

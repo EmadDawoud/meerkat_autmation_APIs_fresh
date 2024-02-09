@@ -13,8 +13,8 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from '../ApiClient';
-import {SNMPCollector} from './SNMPCollector';
+import { ApiClient } from "../ApiClient.js";
+import { SNMPCollector } from "./SNMPCollector.js";
 
 /**
  * The AllOfDeviceSNMPCollector model module.
@@ -27,8 +27,7 @@ export class AllOfDeviceSNMPCollector {
    * @alias module:model/AllOfDeviceSNMPCollector
    * @class
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Constructs a <code>AllOfDeviceSNMPCollector</code> from a plain JavaScript object, optionally creating a new instance.
@@ -40,20 +39,26 @@ export class AllOfDeviceSNMPCollector {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new AllOfDeviceSNMPCollector();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
-      if (data.hasOwnProperty('devicenum'))
-        obj.devicenum = ApiClient.convertToType(data['devicenum'], 'Number');
-      if (data.hasOwnProperty('kpinum'))
-        obj.kpinum = ApiClient.convertToType(data['kpinum'], 'Number');
-      if (data.hasOwnProperty('communitystr'))
-        obj.communitystr = ApiClient.convertToType(data['communitystr'], 'String');
-      if (data.hasOwnProperty('collectorvm'))
-        obj.collectorvm = ApiClient.convertToType(data['collectorvm'], 'String');
-      if (data.hasOwnProperty('collectorVM'))
-        obj.collectorVM = ApiClient.convertToType(data['collectorVM'], Object);
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
+      if (data.hasOwnProperty("devicenum"))
+        obj.devicenum = ApiClient.convertToType(data["devicenum"], "Number");
+      if (data.hasOwnProperty("kpinum"))
+        obj.kpinum = ApiClient.convertToType(data["kpinum"], "Number");
+      if (data.hasOwnProperty("communitystr"))
+        obj.communitystr = ApiClient.convertToType(
+          data["communitystr"],
+          "String"
+        );
+      if (data.hasOwnProperty("collectorvm"))
+        obj.collectorvm = ApiClient.convertToType(
+          data["collectorvm"],
+          "String"
+        );
+      if (data.hasOwnProperty("collectorVM"))
+        obj.collectorVM = ApiClient.convertToType(data["collectorVM"], Object);
     }
     return obj;
   }
@@ -99,4 +104,3 @@ AllOfDeviceSNMPCollector.prototype.collectorvm = undefined;
  * @member {Object} collectorVM
  */
 AllOfDeviceSNMPCollector.prototype.collectorVM = undefined;
-

@@ -13,211 +13,210 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from './ApiClient';
-import {AllOfDeviceSNMPCollector} from './model/AllOfDeviceSNMPCollector';
-import {AllOfMetricSNMPMIB} from './model/AllOfMetricSNMPMIB';
-import {AllOfMonObjSNMPMIB} from './model/AllOfMonObjSNMPMIB';
-import {AllOfSNMPCollectorCollectorVM} from './model/AllOfSNMPCollectorCollectorVM';
-import {CollectorVM} from './model/CollectorVM';
-import {CommunityStr} from './model/CommunityStr';
-import {Device} from './model/Device';
-import {DeviceType} from './model/DeviceType';
-import {Metric} from './model/Metric';
-import {MonObj} from './model/MonObj';
-import {Province} from './model/Province';
-import {SNMPCollector} from './model/SNMPCollector';
-import {SNMPMIB} from './model/SNMPMIB';
-import {Vendor} from './model/Vendor';
-import {CollectorVMApi} from './api/CollectorVMApi';
-import {CommunityStrApi} from './api/CommunityStrApi';
-import {DeviceApi} from './api/DeviceApi';
-import {DeviceTypeApi} from './api/DeviceTypeApi';
-import {MetricApi} from './api/MetricApi';
-import {MonObjApi} from './api/MonObjApi';
-import {ProvinceApi} from './api/ProvinceApi';
-import {SNMPCollectorApi} from './api/SNMPCollectorApi';
-import {SNMPMIBApi} from './api/SNMPMIBApi';
-import {VendorApi} from './api/VendorApi';
-
+import { ApiClient } from "./ApiClient.js";
+import { AllOfDeviceSNMPCollector } from "./model/AllOfDeviceSNMPCollector.js";
+import { AllOfMetricSNMPMIB } from "./model/AllOfMetricSNMPMIB.js";
+import { AllOfMonObjSNMPMIB } from "./model/AllOfMonObjSNMPMIB.js";
+import { AllOfSNMPCollectorCollectorVM } from "./model/AllOfSNMPCollectorCollectorVM.js";
+import { CollectorVM } from "./model/CollectorVM.js";
+import { CommunityStr } from "./model/CommunityStr.js";
+import { Device } from "./model/Device.js";
+import { DeviceType } from "./model/DeviceType.js";
+import { Metric } from "./model/Metric.js";
+import { MonObj } from "./model/MonObj.js";
+import { Province } from "./model/Province.js";
+import { SNMPCollector } from "./model/SNMPCollector.js";
+import { SNMPMIB } from "./model/SNMPMIB.js";
+import { Vendor } from "./model/Vendor.js";
+import { CollectorVMApi } from "./api/CollectorVMApi.js";
+import { CommunityStrApi } from "./api/CommunityStrApi.js";
+import { DeviceApi } from "./api/DeviceApi.js";
+import { DeviceTypeApi } from "./api/DeviceTypeApi.js";
+import { MetricApi } from "./api/MetricApi.js";
+import { MonObjApi } from "./api/MonObjApi.js";
+import { ProvinceApi } from "./api/ProvinceApi.js";
+import { SNMPCollectorApi } from "./api/SNMPCollectorApi.js";
+import { SNMPMIBApi } from "./api/SNMPMIBAp.js";
+import { VendorApi } from "./api/VendorApi.js";
 /**
-* This_API_for_quering_and_adding_Meerkat_SNMP_Devices.<br>
-* The <code>index</code> module provides access to constructors for all the classes which comprise the public API.
-* <p>
-* An AMD (recommended!) or CommonJS application will generally do something equivalent to the following:
-* <pre>
-* var MeerkatAutomationApis = require('index'); // See note below*.
-* var xxxSvc = new MeerkatAutomationApis.XxxApi(); // Allocate the API class we're going to use.
-* var yyyModel = new MeerkatAutomationApis.Yyy(); // Construct a model instance.
-* yyyModel.someProperty = 'someValue';
-* ...
-* var zzz = xxxSvc.doSomething(yyyModel); // Invoke the service.
-* ...
-* </pre>
-* <em>*NOTE: For a top-level AMD script, use require(['index'], function(){...})
-* and put the application logic within the callback function.</em>
-* </p>
-* <p>
-* A non-AMD browser application (discouraged) might do something like this:
-* <pre>
-* var xxxSvc = new MeerkatAutomationApis.XxxApi(); // Allocate the API class we're going to use.
-* var yyy = new MeerkatAutomationApis.Yyy(); // Construct a model instance.
-* yyyModel.someProperty = 'someValue';
-* ...
-* var zzz = xxxSvc.doSomething(yyyModel); // Invoke the service.
-* ...
-* </pre>
-* </p>
-* @module index
-* @version 2.0.0
-*/
+ * This_API_for_quering_and_adding_Meerkat_SNMP_Devices.<br>
+ * The <code>index</code> module provides access to constructors for all the classes which comprise the public API.
+ * <p>
+ * An AMD (recommended!) or CommonJS application will generally do something equivalent to the following:
+ * <pre>
+ * var MeerkatAutomationApis = require('index'); // See note below*.
+ * var xxxSvc = new MeerkatAutomationApis.XxxApi(); // Allocate the API class we're going to use.
+ * var yyyModel = new MeerkatAutomationApis.Yyy(); // Construct a model instance.
+ * yyyModel.someProperty = 'someValue';
+ * ...
+ * var zzz = xxxSvc.doSomething(yyyModel); // Invoke the service.
+ * ...
+ * </pre>
+ * <em>*NOTE: For a top-level AMD script, use require(['index'], function(){...})
+ * and put the application logic within the callback function.</em>
+ * </p>
+ * <p>
+ * A non-AMD browser application (discouraged) might do something like this:
+ * <pre>
+ * var xxxSvc = new MeerkatAutomationApis.XxxApi(); // Allocate the API class we're going to use.
+ * var yyy = new MeerkatAutomationApis.Yyy(); // Construct a model instance.
+ * yyyModel.someProperty = 'someValue';
+ * ...
+ * var zzz = xxxSvc.doSomething(yyyModel); // Invoke the service.
+ * ...
+ * </pre>
+ * </p>
+ * @module index
+ * @version 2.0.0
+ */
 export {
-    /**
-     * The ApiClient constructor.
-     * @property {module:ApiClient}
-     */
-    ApiClient,
+  /**
+   * The ApiClient constructor.
+   * @property {module:ApiClient}
+   */
+  ApiClient,
 
-    /**
-     * The AllOfDeviceSNMPCollector model constructor.
-     * @property {module:model/AllOfDeviceSNMPCollector}
-     */
-    AllOfDeviceSNMPCollector,
+  /**
+   * The AllOfDeviceSNMPCollector model constructor.
+   * @property {module:model/AllOfDeviceSNMPCollector}
+   */
+  AllOfDeviceSNMPCollector,
 
-    /**
-     * The AllOfMetricSNMPMIB model constructor.
-     * @property {module:model/AllOfMetricSNMPMIB}
-     */
-    AllOfMetricSNMPMIB,
+  /**
+   * The AllOfMetricSNMPMIB model constructor.
+   * @property {module:model/AllOfMetricSNMPMIB}
+   */
+  AllOfMetricSNMPMIB,
 
-    /**
-     * The AllOfMonObjSNMPMIB model constructor.
-     * @property {module:model/AllOfMonObjSNMPMIB}
-     */
-    AllOfMonObjSNMPMIB,
+  /**
+   * The AllOfMonObjSNMPMIB model constructor.
+   * @property {module:model/AllOfMonObjSNMPMIB}
+   */
+  AllOfMonObjSNMPMIB,
 
-    /**
-     * The AllOfSNMPCollectorCollectorVM model constructor.
-     * @property {module:model/AllOfSNMPCollectorCollectorVM}
-     */
-    AllOfSNMPCollectorCollectorVM,
+  /**
+   * The AllOfSNMPCollectorCollectorVM model constructor.
+   * @property {module:model/AllOfSNMPCollectorCollectorVM}
+   */
+  AllOfSNMPCollectorCollectorVM,
 
-    /**
-     * The CollectorVM model constructor.
-     * @property {module:model/CollectorVM}
-     */
-    CollectorVM,
+  /**
+   * The CollectorVM model constructor.
+   * @property {module:model/CollectorVM}
+   */
+  CollectorVM,
 
-    /**
-     * The CommunityStr model constructor.
-     * @property {module:model/CommunityStr}
-     */
-    CommunityStr,
+  /**
+   * The CommunityStr model constructor.
+   * @property {module:model/CommunityStr}
+   */
+  CommunityStr,
 
-    /**
-     * The Device model constructor.
-     * @property {module:model/Device}
-     */
-    Device,
+  /**
+   * The Device model constructor.
+   * @property {module:model/Device}
+   */
+  Device,
 
-    /**
-     * The DeviceType model constructor.
-     * @property {module:model/DeviceType}
-     */
-    DeviceType,
+  /**
+   * The DeviceType model constructor.
+   * @property {module:model/DeviceType}
+   */
+  DeviceType,
 
-    /**
-     * The Metric model constructor.
-     * @property {module:model/Metric}
-     */
-    Metric,
+  /**
+   * The Metric model constructor.
+   * @property {module:model/Metric}
+   */
+  Metric,
 
-    /**
-     * The MonObj model constructor.
-     * @property {module:model/MonObj}
-     */
-    MonObj,
+  /**
+   * The MonObj model constructor.
+   * @property {module:model/MonObj}
+   */
+  MonObj,
 
-    /**
-     * The Province model constructor.
-     * @property {module:model/Province}
-     */
-    Province,
+  /**
+   * The Province model constructor.
+   * @property {module:model/Province}
+   */
+  Province,
 
-    /**
-     * The SNMPCollector model constructor.
-     * @property {module:model/SNMPCollector}
-     */
-    SNMPCollector,
+  /**
+   * The SNMPCollector model constructor.
+   * @property {module:model/SNMPCollector}
+   */
+  SNMPCollector,
 
-    /**
-     * The SNMPMIB model constructor.
-     * @property {module:model/SNMPMIB}
-     */
-    SNMPMIB,
+  /**
+   * The SNMPMIB model constructor.
+   * @property {module:model/SNMPMIB}
+   */
+  SNMPMIB,
 
-    /**
-     * The Vendor model constructor.
-     * @property {module:model/Vendor}
-     */
-    Vendor,
+  /**
+   * The Vendor model constructor.
+   * @property {module:model/Vendor}
+   */
+  Vendor,
 
-    /**
-    * The CollectorVMApi service constructor.
-    * @property {module:api/CollectorVMApi}
-    */
-    CollectorVMApi,
+  /**
+   * The CollectorVMApi service constructor.
+   * @property {module:api/CollectorVMApi}
+   */
+  CollectorVMApi,
 
-    /**
-    * The CommunityStrApi service constructor.
-    * @property {module:api/CommunityStrApi}
-    */
-    CommunityStrApi,
+  /**
+   * The CommunityStrApi service constructor.
+   * @property {module:api/CommunityStrApi}
+   */
+  CommunityStrApi,
 
-    /**
-    * The DeviceApi service constructor.
-    * @property {module:api/DeviceApi}
-    */
-    DeviceApi,
+  /**
+   * The DeviceApi service constructor.
+   * @property {module:api/DeviceApi}
+   */
+  DeviceApi,
 
-    /**
-    * The DeviceTypeApi service constructor.
-    * @property {module:api/DeviceTypeApi}
-    */
-    DeviceTypeApi,
+  /**
+   * The DeviceTypeApi service constructor.
+   * @property {module:api/DeviceTypeApi}
+   */
+  DeviceTypeApi,
 
-    /**
-    * The MetricApi service constructor.
-    * @property {module:api/MetricApi}
-    */
-    MetricApi,
+  /**
+   * The MetricApi service constructor.
+   * @property {module:api/MetricApi}
+   */
+  MetricApi,
 
-    /**
-    * The MonObjApi service constructor.
-    * @property {module:api/MonObjApi}
-    */
-    MonObjApi,
+  /**
+   * The MonObjApi service constructor.
+   * @property {module:api/MonObjApi}
+   */
+  MonObjApi,
 
-    /**
-    * The ProvinceApi service constructor.
-    * @property {module:api/ProvinceApi}
-    */
-    ProvinceApi,
+  /**
+   * The ProvinceApi service constructor.
+   * @property {module:api/ProvinceApi}
+   */
+  ProvinceApi,
 
-    /**
-    * The SNMPCollectorApi service constructor.
-    * @property {module:api/SNMPCollectorApi}
-    */
-    SNMPCollectorApi,
+  /**
+   * The SNMPCollectorApi service constructor.
+   * @property {module:api/SNMPCollectorApi}
+   */
+  SNMPCollectorApi,
 
-    /**
-    * The SNMPMIBApi service constructor.
-    * @property {module:api/SNMPMIBApi}
-    */
-    SNMPMIBApi,
+  /**
+   * The SNMPMIBApi service constructor.
+   * @property {module:api/SNMPMIBApi}
+   */
+  SNMPMIBApi,
 
-    /**
-    * The VendorApi service constructor.
-    * @property {module:api/VendorApi}
-    */
-    VendorApi
+  /**
+   * The VendorApi service constructor.
+   * @property {module:api/VendorApi}
+   */
+  VendorApi,
 };

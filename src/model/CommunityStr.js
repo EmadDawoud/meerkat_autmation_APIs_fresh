@@ -13,7 +13,7 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from '../ApiClient';
+import { ApiClient } from "../ApiClient.js";
 
 /**
  * The CommunityStr model module.
@@ -26,8 +26,7 @@ export class CommunityStr {
    * @alias module:model/CommunityStr
    * @class
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Constructs a <code>CommunityStr</code> from a plain JavaScript object, optionally creating a new instance.
@@ -39,10 +38,10 @@ export class CommunityStr {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new CommunityStr();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
     }
     return obj;
   }
@@ -59,4 +58,3 @@ CommunityStr.prototype.id = undefined;
  * @member {String} name
  */
 CommunityStr.prototype.name = undefined;
-

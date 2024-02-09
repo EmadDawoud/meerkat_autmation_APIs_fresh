@@ -13,7 +13,7 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from '../ApiClient';
+import { ApiClient } from "../ApiClient.js";
 
 /**
  * The SNMPMIB model module.
@@ -26,8 +26,7 @@ export class SNMPMIB {
    * @alias module:model/SNMPMIB
    * @class
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Constructs a <code>SNMPMIB</code> from a plain JavaScript object, optionally creating a new instance.
@@ -39,12 +38,12 @@ export class SNMPMIB {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new SNMPMIB();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
-      if (data.hasOwnProperty('file'))
-        obj.file = ApiClient.convertToType(data['file'], 'String');
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
+      if (data.hasOwnProperty("file"))
+        obj.file = ApiClient.convertToType(data["file"], "String");
     }
     return obj;
   }
@@ -67,4 +66,3 @@ SNMPMIB.prototype.name = undefined;
  * @member {String} file
  */
 SNMPMIB.prototype.file = undefined;
-
