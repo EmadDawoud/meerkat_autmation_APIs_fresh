@@ -36,7 +36,8 @@ export class ApiClient {
      * @default https://virtserver.swaggerhub.com/EMADSAMU/MeerkatAuoAPIs/2.0.0
      */
     //this.basePath = 'https://virtserver.swaggerhub.com/EMADSAMU/MeerkatAuoAPIs/2.0.0'.replace(/\/+$/, '');
-    this.basePath = "http://localhost:8080:".replace(/\/+$/, "");
+    this.basePath =
+      "http://localhost:8080/EMADSAMU/MeerkatAuoAPIs/2.0.0".replace(/\/+$/, "");
 
     /**
      * The authentication methods to be included for all API calls.
