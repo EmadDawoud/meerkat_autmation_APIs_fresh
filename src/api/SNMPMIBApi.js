@@ -13,17 +13,16 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from "../ApiClient";
-import {SNMPMIB} from '../model/SNMPMIB';
+import { ApiClient } from "../ApiClient.js";
+import { SNMPMIB } from "../model/SNMPMIB.js";
 
 /**
-* SNMPMIB service.
-* @module api/SNMPMIBApi
-* @version 2.0.0
-*/
+ * SNMPMIB service.
+ * @module api/SNMPMIBApi
+ * @version 2.0.0
+ */
 export class SNMPMIBApi {
-
-    /**
+  /**
     * Constructs a new SNMPMIBApi. 
     * @alias module:api/SNMPMIBApi
     * @class
@@ -31,94 +30,94 @@ export class SNMPMIBApi {
     * default to {@link module:ApiClient#instanc
     e} if unspecified.
     */
-    constructor(apiClient) {
-        this.apiClient = apiClient || ApiClient.instance;
-    }
+  constructor(apiClient) {
+    this.apiClient = apiClient || ApiClient.instance;
+  }
 
-    /**
-     * Callback function to receive the result of the addSNMPMIB operation.
-     * @callback moduleapi/SNMPMIBApi~addSNMPMIBCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
+  /**
+   * Callback function to receive the result of the addSNMPMIB operation.
+   * @callback moduleapi/SNMPMIBApi~addSNMPMIBCallback
+   * @param {String} error Error message, if any.
+   * @param data This operation does not return a value.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * Adds SNMPMIB
-     * Adds SNMP MIBs to the system
-     * @param {Object} opts Optional parameters
-     * @param {module:model/SNMPMIB} opts.body Inventory item to add
-     * @param {module:api/SNMPMIBApi~addSNMPMIBCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    addSNMPMIB(opts, callback) {
-      opts = opts || {};
-      let postBody = opts['body'];
+  /**
+   * Adds SNMPMIB
+   * Adds SNMP MIBs to the system
+   * @param {Object} opts Optional parameters
+   * @param {module:model/SNMPMIB} opts.body Inventory item to add
+   * @param {module:api/SNMPMIBApi~addSNMPMIBCallback} callback The callback function, accepting three arguments: error, data, response
+   */
+  addSNMPMIB(opts, callback) {
+    opts = opts || {};
+    let postBody = opts["body"];
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
-      let returnType = null;
+    let authNames = [];
+    let contentTypes = ["application/json"];
+    let accepts = [];
+    let returnType = null;
 
-      return this.apiClient.callApi(
-        '/SNMPMIB', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
-     * Callback function to receive the result of the searchSNMPMIB operation.
-     * @callback moduleapi/SNMPMIBApi~searchSNMPMIBCallback
-     * @param {String} error Error message, if any.
-     * @param {Array.<module:model/SNMPMIB>{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
+    return this.apiClient.callApi(
+      "/SNMPMIB",
+      "POST",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
+  /**
+   * Callback function to receive the result of the searchSNMPMIB operation.
+   * @callback moduleapi/SNMPMIBApi~searchSNMPMIBCallback
+   * @param {String} error Error message, if any.
+   * @param {Array.<module:model/SNMPMIB>{ data The data returned by the service call.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * searches SNMP MIB
-     * By passing in the appropriate options, you can search for available SNMP MIBs 
-     * @param {module:api/SNMPMIBApi~searchSNMPMIBCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
-     */
-    searchSNMPMIB(callback) {
-      
-      let postBody = null;
+  /**
+   * searches SNMP MIB
+   * By passing in the appropriate options, you can search for available SNMP MIBs
+   * @param {module:api/SNMPMIBApi~searchSNMPMIBCallback} callback The callback function, accepting three arguments: error, data, response
+   * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+   */
+  searchSNMPMIB(callback) {
+    let postBody = null;
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
-      let returnType = [SNMPMIB];
+    let authNames = [];
+    let contentTypes = [];
+    let accepts = ["application/json"];
+    let returnType = [SNMPMIB];
 
-      return this.apiClient.callApi(
-        '/SNMPMIB', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
+    return this.apiClient.callApi(
+      "/SNMPMIB",
+      "GET",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
 }

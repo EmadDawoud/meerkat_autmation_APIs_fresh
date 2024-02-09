@@ -13,17 +13,16 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from "../ApiClient";
-import {SNMPCollector} from '../model/SNMPCollector';
+import { ApiClient } from "../ApiClient.js";
+import { SNMPCollector } from "../model/SNMPCollector.js";
 
 /**
-* SNMPCollector service.
-* @module api/SNMPCollectorApi
-* @version 2.0.0
-*/
+ * SNMPCollector service.
+ * @module api/SNMPCollectorApi
+ * @version 2.0.0
+ */
 export class SNMPCollectorApi {
-
-    /**
+  /**
     * Constructs a new SNMPCollectorApi. 
     * @alias module:api/SNMPCollectorApi
     * @class
@@ -31,94 +30,94 @@ export class SNMPCollectorApi {
     * default to {@link module:ApiClient#instanc
     e} if unspecified.
     */
-    constructor(apiClient) {
-        this.apiClient = apiClient || ApiClient.instance;
-    }
+  constructor(apiClient) {
+    this.apiClient = apiClient || ApiClient.instance;
+  }
 
-    /**
-     * Callback function to receive the result of the addSNMPCollector operation.
-     * @callback moduleapi/SNMPCollectorApi~addSNMPCollectorCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
+  /**
+   * Callback function to receive the result of the addSNMPCollector operation.
+   * @callback moduleapi/SNMPCollectorApi~addSNMPCollectorCallback
+   * @param {String} error Error message, if any.
+   * @param data This operation does not return a value.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * Adds SNMP Collector
-     * Adds SNMP Collector to the system
-     * @param {Object} opts Optional parameters
-     * @param {module:model/SNMPCollector} opts.body Inventory item to add SNMPcCollector
-     * @param {module:api/SNMPCollectorApi~addSNMPCollectorCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    addSNMPCollector(opts, callback) {
-      opts = opts || {};
-      let postBody = opts['body'];
+  /**
+   * Adds SNMP Collector
+   * Adds SNMP Collector to the system
+   * @param {Object} opts Optional parameters
+   * @param {module:model/SNMPCollector} opts.body Inventory item to add SNMPcCollector
+   * @param {module:api/SNMPCollectorApi~addSNMPCollectorCallback} callback The callback function, accepting three arguments: error, data, response
+   */
+  addSNMPCollector(opts, callback) {
+    opts = opts || {};
+    let postBody = opts["body"];
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
-      let returnType = null;
+    let authNames = [];
+    let contentTypes = ["application/json"];
+    let accepts = [];
+    let returnType = null;
 
-      return this.apiClient.callApi(
-        '/SNMPCollector', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
-     * Callback function to receive the result of the searchSNMPCollector operation.
-     * @callback moduleapi/SNMPCollectorApi~searchSNMPCollectorCallback
-     * @param {String} error Error message, if any.
-     * @param {Array.<module:model/SNMPCollector>{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
+    return this.apiClient.callApi(
+      "/SNMPCollector",
+      "POST",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
+  /**
+   * Callback function to receive the result of the searchSNMPCollector operation.
+   * @callback moduleapi/SNMPCollectorApi~searchSNMPCollectorCallback
+   * @param {String} error Error message, if any.
+   * @param {Array.<module:model/SNMPCollector>{ data The data returned by the service call.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * searches SNMP Collector
-     * By passing in the appropriate options, you can search for available SNMP Collectors 
-     * @param {module:api/SNMPCollectorApi~searchSNMPCollectorCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
-     */
-    searchSNMPCollector(callback) {
-      
-      let postBody = null;
+  /**
+   * searches SNMP Collector
+   * By passing in the appropriate options, you can search for available SNMP Collectors
+   * @param {module:api/SNMPCollectorApi~searchSNMPCollectorCallback} callback The callback function, accepting three arguments: error, data, response
+   * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+   */
+  searchSNMPCollector(callback) {
+    let postBody = null;
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
-      let returnType = [SNMPCollector];
+    let authNames = [];
+    let contentTypes = [];
+    let accepts = ["application/json"];
+    let returnType = [SNMPCollector];
 
-      return this.apiClient.callApi(
-        '/SNMPCollector', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
+    return this.apiClient.callApi(
+      "/SNMPCollector",
+      "GET",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
 }

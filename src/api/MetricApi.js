@@ -13,17 +13,16 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from "../ApiClient";
-import {Metric} from '../model/Metric';
+import { ApiClient } from "../ApiClient.js";
+import { Metric } from "../model/Metric.js";
 
 /**
-* Metric service.
-* @module api/MetricApi
-* @version 2.0.0
-*/
+ * Metric service.
+ * @module api/MetricApi
+ * @version 2.0.0
+ */
 export class MetricApi {
-
-    /**
+  /**
     * Constructs a new MetricApi. 
     * @alias module:api/MetricApi
     * @class
@@ -31,94 +30,94 @@ export class MetricApi {
     * default to {@link module:ApiClient#instanc
     e} if unspecified.
     */
-    constructor(apiClient) {
-        this.apiClient = apiClient || ApiClient.instance;
-    }
+  constructor(apiClient) {
+    this.apiClient = apiClient || ApiClient.instance;
+  }
 
-    /**
-     * Callback function to receive the result of the addMetric operation.
-     * @callback moduleapi/MetricApi~addMetricCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
+  /**
+   * Callback function to receive the result of the addMetric operation.
+   * @callback moduleapi/MetricApi~addMetricCallback
+   * @param {String} error Error message, if any.
+   * @param data This operation does not return a value.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * Adds Monitored Objects
-     * Adds Metrics to the system
-     * @param {Object} opts Optional parameters
-     * @param {module:model/Metric} opts.body Metric to add
-     * @param {module:api/MetricApi~addMetricCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    addMetric(opts, callback) {
-      opts = opts || {};
-      let postBody = opts['body'];
+  /**
+   * Adds Monitored Objects
+   * Adds Metrics to the system
+   * @param {Object} opts Optional parameters
+   * @param {module:model/Metric} opts.body Metric to add
+   * @param {module:api/MetricApi~addMetricCallback} callback The callback function, accepting three arguments: error, data, response
+   */
+  addMetric(opts, callback) {
+    opts = opts || {};
+    let postBody = opts["body"];
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
-      let returnType = null;
+    let authNames = [];
+    let contentTypes = ["application/json"];
+    let accepts = [];
+    let returnType = null;
 
-      return this.apiClient.callApi(
-        '/Metric', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
-     * Callback function to receive the result of the searcMetric operation.
-     * @callback moduleapi/MetricApi~searcMetricCallback
-     * @param {String} error Error message, if any.
-     * @param {Array.<module:model/Metric>{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
+    return this.apiClient.callApi(
+      "/Metric",
+      "POST",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
+  /**
+   * Callback function to receive the result of the searcMetric operation.
+   * @callback moduleapi/MetricApi~searcMetricCallback
+   * @param {String} error Error message, if any.
+   * @param {Array.<module:model/Metric>{ data The data returned by the service call.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * searches Monitored Objects
-     * By passing in the appropriate options, you can search for available Metrics 
-     * @param {module:api/MetricApi~searcMetricCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
-     */
-    searcMetric(callback) {
-      
-      let postBody = null;
+  /**
+   * searches Monitored Objects
+   * By passing in the appropriate options, you can search for available Metrics
+   * @param {module:api/MetricApi~searcMetricCallback} callback The callback function, accepting three arguments: error, data, response
+   * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+   */
+  searcMetric(callback) {
+    let postBody = null;
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
-      let returnType = [Metric];
+    let authNames = [];
+    let contentTypes = [];
+    let accepts = ["application/json"];
+    let returnType = [Metric];
 
-      return this.apiClient.callApi(
-        '/Metric', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
+    return this.apiClient.callApi(
+      "/Metric",
+      "GET",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
 }
