@@ -13,7 +13,7 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from '../ApiClient';
+import { ApiClient } from "../ApiClient.js";
 
 /**
  * The Province model module.
@@ -26,8 +26,7 @@ export class Province {
    * @alias module:model/Province
    * @class
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Constructs a <code>Province</code> from a plain JavaScript object, optionally creating a new instance.
@@ -39,10 +38,10 @@ export class Province {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new Province();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
     }
     return obj;
   }
@@ -59,4 +58,3 @@ Province.prototype.id = undefined;
  * @member {String} name
  */
 Province.prototype.name = undefined;
-

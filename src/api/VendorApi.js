@@ -13,17 +13,16 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from "../ApiClient";
-import {Vendor} from '../model/Vendor';
+import { ApiClient } from "../ApiClient.js";
+import { Vendor } from "../model/Vendor.js";
 
 /**
-* Vendor service.
-* @module api/VendorApi
-* @version 2.0.0
-*/
+ * Vendor service.
+ * @module api/VendorApi
+ * @version 2.0.0
+ */
 export class VendorApi {
-
-    /**
+  /**
     * Constructs a new VendorApi. 
     * @alias module:api/VendorApi
     * @class
@@ -31,94 +30,94 @@ export class VendorApi {
     * default to {@link module:ApiClient#instanc
     e} if unspecified.
     */
-    constructor(apiClient) {
-        this.apiClient = apiClient || ApiClient.instance;
-    }
+  constructor(apiClient) {
+    this.apiClient = apiClient || ApiClient.instance;
+  }
 
-    /**
-     * Callback function to receive the result of the addVendor operation.
-     * @callback moduleapi/VendorApi~addVendorCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
+  /**
+   * Callback function to receive the result of the addVendor operation.
+   * @callback moduleapi/VendorApi~addVendorCallback
+   * @param {String} error Error message, if any.
+   * @param data This operation does not return a value.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * Adds Monitored Objects
-     * Adds Monitored Objects to the system
-     * @param {Object} opts Optional parameters
-     * @param {module:model/Vendor} opts.body Inventory item to add
-     * @param {module:api/VendorApi~addVendorCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    addVendor(opts, callback) {
-      opts = opts || {};
-      let postBody = opts['body'];
+  /**
+   * Adds Monitored Objects
+   * Adds Monitored Objects to the system
+   * @param {Object} opts Optional parameters
+   * @param {module:model/Vendor} opts.body Inventory item to add
+   * @param {module:api/VendorApi~addVendorCallback} callback The callback function, accepting three arguments: error, data, response
+   */
+  addVendor(opts, callback) {
+    opts = opts || {};
+    let postBody = opts["body"];
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
-      let returnType = null;
+    let authNames = [];
+    let contentTypes = ["application/json"];
+    let accepts = [];
+    let returnType = null;
 
-      return this.apiClient.callApi(
-        '/Vendor', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
-     * Callback function to receive the result of the searchVendor operation.
-     * @callback moduleapi/VendorApi~searchVendorCallback
-     * @param {String} error Error message, if any.
-     * @param {Array.<module:model/Vendor>{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
+    return this.apiClient.callApi(
+      "/Vendor",
+      "POST",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
+  /**
+   * Callback function to receive the result of the searchVendor operation.
+   * @callback moduleapi/VendorApi~searchVendorCallback
+   * @param {String} error Error message, if any.
+   * @param {Array.<module:model/Vendor>{ data The data returned by the service call.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * searches Vendors
-     * By passing in the appropriate options, you can search for available Vendors 
-     * @param {module:api/VendorApi~searchVendorCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
-     */
-    searchVendor(callback) {
-      
-      let postBody = null;
+  /**
+   * searches Vendors
+   * By passing in the appropriate options, you can search for available Vendors
+   * @param {module:api/VendorApi~searchVendorCallback} callback The callback function, accepting three arguments: error, data, response
+   * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+   */
+  searchVendor(callback) {
+    let postBody = null;
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
-      let returnType = [Vendor];
+    let authNames = [];
+    let contentTypes = [];
+    let accepts = ["application/json"];
+    let returnType = [Vendor];
 
-      return this.apiClient.callApi(
-        '/Vendor', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
+    return this.apiClient.callApi(
+      "/Vendor",
+      "GET",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
 }

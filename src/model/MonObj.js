@@ -13,8 +13,8 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from '../ApiClient';
-import {Metric} from './Metric';
+import { ApiClient } from "../ApiClient.js";
+import { Metric } from "./Metric.js";
 
 /**
  * The MonObj model module.
@@ -26,8 +26,8 @@ export class MonObj {
    * Constructs a new <code>MonObj</code>.
    * @alias module:model/MonObj
    * @class
-   * @param sNMPMIB {Object} 
-   * @param metric {Array.<module:model/Metric>} 
+   * @param sNMPMIB {Object}
+   * @param metric {Array.<module:model/Metric>}
    */
   constructor(sNMPMIB, metric) {
     this.sNMPMIB = sNMPMIB;
@@ -44,18 +44,18 @@ export class MonObj {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new MonObj();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
-      if (data.hasOwnProperty('oid'))
-        obj.oid = ApiClient.convertToType(data['oid'], 'String');
-      if (data.hasOwnProperty('snmpmib'))
-        obj.snmpmib = ApiClient.convertToType(data['snmpmib'], 'String');
-      if (data.hasOwnProperty('sNMPMIB'))
-        obj.sNMPMIB = ApiClient.convertToType(data['sNMPMIB'], Object);
-      if (data.hasOwnProperty('metric'))
-        obj.metric = ApiClient.convertToType(data['metric'], [Metric]);
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
+      if (data.hasOwnProperty("oid"))
+        obj.oid = ApiClient.convertToType(data["oid"], "String");
+      if (data.hasOwnProperty("snmpmib"))
+        obj.snmpmib = ApiClient.convertToType(data["snmpmib"], "String");
+      if (data.hasOwnProperty("sNMPMIB"))
+        obj.sNMPMIB = ApiClient.convertToType(data["sNMPMIB"], Object);
+      if (data.hasOwnProperty("metric"))
+        obj.metric = ApiClient.convertToType(data["metric"], [Metric]);
     }
     return obj;
   }
@@ -94,4 +94,3 @@ MonObj.prototype.sNMPMIB = undefined;
  * @member {Array.<module:model/Metric>} metric
  */
 MonObj.prototype.metric = undefined;
-

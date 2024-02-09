@@ -13,7 +13,7 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from '../ApiClient';
+import { ApiClient } from "../ApiClient.js";
 
 /**
  * The SNMPCollector model module.
@@ -26,8 +26,7 @@ export class SNMPCollector {
    * @alias module:model/SNMPCollector
    * @class
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Constructs a <code>SNMPCollector</code> from a plain JavaScript object, optionally creating a new instance.
@@ -39,20 +38,26 @@ export class SNMPCollector {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new SNMPCollector();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
-      if (data.hasOwnProperty('devicenum'))
-        obj.devicenum = ApiClient.convertToType(data['devicenum'], 'Number');
-      if (data.hasOwnProperty('kpinum'))
-        obj.kpinum = ApiClient.convertToType(data['kpinum'], 'Number');
-      if (data.hasOwnProperty('communitystr'))
-        obj.communitystr = ApiClient.convertToType(data['communitystr'], 'String');
-      if (data.hasOwnProperty('collectorvm'))
-        obj.collectorvm = ApiClient.convertToType(data['collectorvm'], 'String');
-      if (data.hasOwnProperty('collectorVM'))
-        obj.collectorVM = ApiClient.convertToType(data['collectorVM'], Object);
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
+      if (data.hasOwnProperty("devicenum"))
+        obj.devicenum = ApiClient.convertToType(data["devicenum"], "Number");
+      if (data.hasOwnProperty("kpinum"))
+        obj.kpinum = ApiClient.convertToType(data["kpinum"], "Number");
+      if (data.hasOwnProperty("communitystr"))
+        obj.communitystr = ApiClient.convertToType(
+          data["communitystr"],
+          "String"
+        );
+      if (data.hasOwnProperty("collectorvm"))
+        obj.collectorvm = ApiClient.convertToType(
+          data["collectorvm"],
+          "String"
+        );
+      if (data.hasOwnProperty("collectorVM"))
+        obj.collectorVM = ApiClient.convertToType(data["collectorVM"], Object);
     }
     return obj;
   }
@@ -98,4 +103,3 @@ SNMPCollector.prototype.collectorvm = undefined;
  * @member {Object} collectorVM
  */
 SNMPCollector.prototype.collectorVM = undefined;
-

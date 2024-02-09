@@ -13,7 +13,7 @@
  * Do not edit the class manually.
  *
  */
-import {ApiClient} from '../ApiClient';
+import { ApiClient } from "../ApiClient.js";
 
 /**
  * The CollectorVM model module.
@@ -26,8 +26,7 @@ export class CollectorVM {
    * @alias module:model/CollectorVM
    * @class
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Constructs a <code>CollectorVM</code> from a plain JavaScript object, optionally creating a new instance.
@@ -39,14 +38,14 @@ export class CollectorVM {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new CollectorVM();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('ip'))
-        obj.ip = ApiClient.convertToType(data['ip'], 'String');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
-      if (data.hasOwnProperty('province'))
-        obj.province = ApiClient.convertToType(data['province'], 'String');
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("ip"))
+        obj.ip = ApiClient.convertToType(data["ip"], "String");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
+      if (data.hasOwnProperty("province"))
+        obj.province = ApiClient.convertToType(data["province"], "String");
     }
     return obj;
   }
@@ -75,4 +74,3 @@ CollectorVM.prototype.name = undefined;
  * @member {String} province
  */
 CollectorVM.prototype.province = undefined;
-
