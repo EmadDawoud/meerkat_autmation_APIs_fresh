@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-var superagent = require('superagent');
-var querystring = require('querystring');
+var superagent = require("superagent");
+var querystring = require("querystring");
 
 /*
  * Meerkat Automation APIs
@@ -20,571 +20,588 @@ var querystring = require('querystring');
  */
 
 /**
-* @module ApiClient
-* @version 2.0.0
-*/
+ * @module ApiClient
+ * @version 2.0.0
+ */
 
 /**
-* Manages low level client-server communications, parameter marshalling, etc. There should not be any need for an
-* application to use this class directly - the *Api and model classes provide the public API for the service. The
-* contents of this file should be regarded as internal but are documented for completeness.
-* @alias module:ApiClient
-* @class
-*/
+ * Manages low level client-server communications, parameter marshalling, etc. There should not be any need for an
+ * application to use this class directly - the *Api and model classes provide the public API for the service. The
+ * contents of this file should be regarded as internal but are documented for completeness.
+ * @alias module:ApiClient
+ * @class
+ */
 class ApiClient {
-    constructor() {
-        /**
-         * The base URL against which to resolve every API call's (relative) path.
-         * @type {String}
-         * @default https://virtserver.swaggerhub.com/EMADSAMU/MeerkatAuoAPIs/2.0.0
-         */
-        this.basePath = 'https://virtserver.swaggerhub.com/EMADSAMU/MeerkatAuoAPIs/2.0.0'.replace(/\/+$/, '');
+  constructor() {
+    /**
+     * The base URL against which to resolve every API call's (relative) path.
+     * @type {String}
+     * @default https://virtserver.swaggerhub.com/EMADSAMU/MeerkatAuoAPIs/2.0.0
+     */
+    //this.basePath = 'https://virtserver.swaggerhub.com/EMADSAMU/MeerkatAuoAPIs/2.0.0'.replace(/\/+$/, '');
+    this.basePath =
+      "http://localhost:8080/EMADSAMU/MeerkatAuoAPIs/2.0.0".replace(/\/+$/, "");
 
-        /**
-         * The authentication methods to be included for all API calls.
-         * @type {Array.<String>}
-         */
-        this.authentications = {
-        };
+    /**
+     * The authentication methods to be included for all API calls.
+     * @type {Array.<String>}
+     */
+    this.authentications = {};
 
-        /**
-         * The default HTTP headers to be included for all API calls.
-         * @type {Array.<String>}
-         * @default {}
-         */
-        this.defaultHeaders = {};
+    /**
+     * The default HTTP headers to be included for all API calls.
+     * @type {Array.<String>}
+     * @default {}
+     */
+    this.defaultHeaders = {};
 
-        /**
-         * The default HTTP timeout for all API calls.
-         * @type {Number}
-         * @default 60000
-         */
-        this.timeout = 60000;
+    /**
+     * The default HTTP timeout for all API calls.
+     * @type {Number}
+     * @default 60000
+     */
+    this.timeout = 60000;
 
-        /**
-         * If set to false an additional timestamp parameter is added to all API GET calls to
-         * prevent browser caching
-         * @type {Boolean}
-         * @default true
-         */
-        this.cache = true;
+    /**
+     * If set to false an additional timestamp parameter is added to all API GET calls to
+     * prevent browser caching
+     * @type {Boolean}
+     * @default true
+     */
+    this.cache = true;
 
-        /**
-         * If set to true, the client will save the cookies from each server
-         * response, and return them in the next request.
-         * @default false
-         */
-        this.enableCookies = false;
+    /**
+     * If set to true, the client will save the cookies from each server
+     * response, and return them in the next request.
+     * @default false
+     */
+    this.enableCookies = false;
 
-        /*
-         * Used to save and return cookies in a node.js (non-browser) setting,
-         * if this.enableCookies is set to true.
-         */
-        if (typeof window === 'undefined') {
-          this.agent = new superagent.agent();
-        }
-
-        /*
-         * Allow user to override superagent agent
-         */
-         this.requestAgent = null;
-
+    /*
+     * Used to save and return cookies in a node.js (non-browser) setting,
+     * if this.enableCookies is set to true.
+     */
+    if (typeof window === "undefined") {
+      this.agent = new superagent.agent();
     }
 
-    /**
-    * Returns a string representation for an actual parameter.
-    * @param param The actual parameter.
-    * @returns {String} The string representation of <code>param</code>.
-    */
-    paramToString(param) {
-        if (param == undefined || param == null) {
-            return '';
-        }
-        if (param instanceof Date) {
-            return param.toJSON();
-        }
+    /*
+     * Allow user to override superagent agent
+     */
+    this.requestAgent = null;
+  }
 
-        return param.toString();
+  /**
+   * Returns a string representation for an actual parameter.
+   * @param param The actual parameter.
+   * @returns {String} The string representation of <code>param</code>.
+   */
+  paramToString(param) {
+    if (param == undefined || param == null) {
+      return "";
+    }
+    if (param instanceof Date) {
+      return param.toJSON();
     }
 
-    /**
-    * Builds full URL by appending the given path to the base URL and replacing path parameter place-holders with parameter values.
-    * NOTE: query parameters are not handled here.
-    * @param {String} path The path to append to the base URL.
-    * @param {Object} pathParams The parameter values to append.
-    * @returns {String} The encoded path with parameter values substituted.
-    */
-    buildUrl(path, pathParams) {
-        if (!path.match(/^\//)) {
-            path = '/' + path;
-        }
+    return param.toString();
+  }
 
-        var url = this.basePath + path;
-        url = url.replace(/\{([\w-]+)\}/g, (fullMatch, key) => {
-            var value;
-            if (pathParams.hasOwnProperty(key)) {
-                value = this.paramToString(pathParams[key]);
-            } else {
-                value = fullMatch;
-            }
-
-            return encodeURIComponent(value);
-        });
-
-        return url;
+  /**
+   * Builds full URL by appending the given path to the base URL and replacing path parameter place-holders with parameter values.
+   * NOTE: query parameters are not handled here.
+   * @param {String} path The path to append to the base URL.
+   * @param {Object} pathParams The parameter values to append.
+   * @returns {String} The encoded path with parameter values substituted.
+   */
+  buildUrl(path, pathParams) {
+    if (!path.match(/^\//)) {
+      path = "/" + path;
     }
 
-    /**
-    * Checks whether the given content type represents JSON.<br>
-    * JSON content type examples:<br>
-    * <ul>
-    * <li>application/json</li>
-    * <li>application/json; charset=UTF8</li>
-    * <li>APPLICATION/JSON</li>
-    * </ul>
-    * @param {String} contentType The MIME content type to check.
-    * @returns {Boolean} <code>true</code> if <code>contentType</code> represents JSON, otherwise <code>false</code>.
-    */
-    isJsonMime(contentType) {
-        return Boolean(contentType != null && contentType.match(/^application\/json(;.*)?$/i));
+    var url = this.basePath + path;
+    url = url.replace(/\{([\w-]+)\}/g, (fullMatch, key) => {
+      var value;
+      if (pathParams.hasOwnProperty(key)) {
+        value = this.paramToString(pathParams[key]);
+      } else {
+        value = fullMatch;
+      }
+
+      return encodeURIComponent(value);
+    });
+
+    return url;
+  }
+
+  /**
+   * Checks whether the given content type represents JSON.<br>
+   * JSON content type examples:<br>
+   * <ul>
+   * <li>application/json</li>
+   * <li>application/json; charset=UTF8</li>
+   * <li>APPLICATION/JSON</li>
+   * </ul>
+   * @param {String} contentType The MIME content type to check.
+   * @returns {Boolean} <code>true</code> if <code>contentType</code> represents JSON, otherwise <code>false</code>.
+   */
+  isJsonMime(contentType) {
+    return Boolean(
+      contentType != null && contentType.match(/^application\/json(;.*)?$/i)
+    );
+  }
+
+  /**
+   * Chooses a content type from the given array, with JSON preferred; i.e. return JSON if included, otherwise return the first.
+   * @param {Array.<String>} contentTypes
+   * @returns {String} The chosen content type, preferring JSON.
+   */
+  jsonPreferredMime(contentTypes) {
+    for (var i = 0; i < contentTypes.length; i++) {
+      if (this.isJsonMime(contentTypes[i])) {
+        return contentTypes[i];
+      }
     }
 
-    /**
-    * Chooses a content type from the given array, with JSON preferred; i.e. return JSON if included, otherwise return the first.
-    * @param {Array.<String>} contentTypes
-    * @returns {String} The chosen content type, preferring JSON.
-    */
-    jsonPreferredMime(contentTypes) {
-        for (var i = 0; i < contentTypes.length; i++) {
-            if (this.isJsonMime(contentTypes[i])) {
-                return contentTypes[i];
-            }
-        }
+    return contentTypes[0];
+  }
 
-        return contentTypes[0];
+  /**
+   * Checks whether the given parameter value represents file-like content.
+   * @param param The parameter to check.
+   * @returns {Boolean} <code>true</code> if <code>param</code> represents a file.
+   */
+  isFileParam(param) {
+    // fs.ReadStream in Node.js and Electron (but not in runtime like browserify)
+    if (typeof require === "function") {
+      let fs;
+      try {
+        fs = require("fs");
+      } catch (err) {}
+      if (fs && fs.ReadStream && param instanceof fs.ReadStream) {
+        return true;
+      }
     }
 
-    /**
-    * Checks whether the given parameter value represents file-like content.
-    * @param param The parameter to check.
-    * @returns {Boolean} <code>true</code> if <code>param</code> represents a file.
-    */
-    isFileParam(param) {
-        // fs.ReadStream in Node.js and Electron (but not in runtime like browserify)
-        if (typeof require === 'function') {
-            let fs;
-            try {
-                fs = require('fs');
-            } catch (err) {}
-            if (fs && fs.ReadStream && param instanceof fs.ReadStream) {
-                return true;
-            }
-        }
-
-        // Buffer in Node.js
-        if (typeof Buffer === 'function' && param instanceof Buffer) {
-            return true;
-        }
-
-        // Blob in browser
-        if (typeof Blob === 'function' && param instanceof Blob) {
-            return true;
-        }
-
-        // File in browser (it seems File object is also instance of Blob, but keep this for safe)
-        if (typeof File === 'function' && param instanceof File) {
-            return true;
-        }
-
-        return false;
+    // Buffer in Node.js
+    if (typeof Buffer === "function" && param instanceof Buffer) {
+      return true;
     }
 
-    /**
-    * Normalizes parameter values:
-    * <ul>
-    * <li>remove nils</li>
-    * <li>keep files and arrays</li>
-    * <li>format to string with `paramToString` for other cases</li>
-    * </ul>
-    * @param {Object.<String, Object>} params The parameters as object properties.
-    * @returns {Object.<String, Object>} normalized parameters.
-    */
-    normalizeParams(params) {
-        var newParams = {};
-        for (var key in params) {
-            if (params.hasOwnProperty(key) && params[key] != undefined && params[key] != null) {
-                var value = params[key];
-                if (this.isFileParam(value) || Array.isArray(value)) {
-                    newParams[key] = value;
-                } else {
-                    newParams[key] = this.paramToString(value);
-                }
-            }
-        }
-
-        return newParams;
+    // Blob in browser
+    if (typeof Blob === "function" && param instanceof Blob) {
+      return true;
     }
 
-    /**
-    * Enumeration of collection format separator strategies.
-    * @enum {String}
-    * @readonly
-    */
-    static CollectionFormatEnum = {
-        /**
-         * Comma-separated values. Value: <code>csv</code>
-         * @const
-         */
-        CSV: ',',
-
-        /**
-         * Space-separated values. Value: <code>ssv</code>
-         * @const
-         */
-        SSV: ' ',
-
-        /**
-         * Tab-separated values. Value: <code>tsv</code>
-         * @const
-         */
-        TSV: '\t',
-
-        /**
-         * Pipe(|)-separated values. Value: <code>pipes</code>
-         * @const
-         */
-        PIPES: '|',
-
-        /**
-         * Native array. Value: <code>multi</code>
-         * @const
-         */
-        MULTI: 'multi'
-    };
-
-    /**
-    * Builds a string representation of an array-type actual parameter, according to the given collection format.
-    * @param {Array} param An array parameter.
-    * @param {module:ApiClient.CollectionFormatEnum} collectionFormat The array element separator strategy.
-    * @returns {String|Array} A string representation of the supplied collection, using the specified delimiter. Returns
-    * <code>param</code> as is if <code>collectionFormat</code> is <code>multi</code>.
-    */
-    buildCollectionParam(param, collectionFormat) {
-        if (param == null) {
-            return null;
-        }
-        switch (collectionFormat) {
-            case 'csv':
-                return param.map(this.paramToString).join(',');
-            case 'ssv':
-                return param.map(this.paramToString).join(' ');
-            case 'tsv':
-                return param.map(this.paramToString).join('\t');
-            case 'pipes':
-                return param.map(this.paramToString).join('|');
-            case 'multi':
-                //return the array directly as SuperAgent will handle it as expected
-                return param.map(this.paramToString);
-            default:
-                throw new Error('Unknown collection format: ' + collectionFormat);
-        }
+    // File in browser (it seems File object is also instance of Blob, but keep this for safe)
+    if (typeof File === "function" && param instanceof File) {
+      return true;
     }
 
-    /**
-    * Applies authentication headers to the request.
-    * @param {Object} request The request object created by a <code>superagent()</code> call.
-    * @param {Array.<String>} authNames An array of authentication method names.
-    */
-    applyAuthToRequest(request, authNames) {
-        authNames.forEach((authName) => {
-            var auth = this.authentications[authName];
-            switch (auth.type) {
-                case 'basic':
-                    if (auth.username || auth.password) {
-                        request.auth(auth.username || '', auth.password || '');
-                    }
+    return false;
+  }
 
-                    break;
-                case 'apiKey':
-                    if (auth.apiKey) {
-                        var data = {};
-                        if (auth.apiKeyPrefix) {
-                            data[auth.name] = auth.apiKeyPrefix + ' ' + auth.apiKey;
-                        } else {
-                            data[auth.name] = auth.apiKey;
-                        }
-
-                        if (auth['in'] === 'header') {
-                            request.set(data);
-                        } else {
-                            request.query(data);
-                        }
-                    }
-
-                    break;
-                case 'oauth2':
-                    if (auth.accessToken) {
-                        request.set({'Authorization': 'Bearer ' + auth.accessToken});
-                    }
-
-                    break;
-                default:
-                    throw new Error('Unknown authentication type: ' + auth.type);
-            }
-        });
-    }
-
-    /**
-    * Deserializes an HTTP response body into a value of the specified type.
-    * @param {Object} response A SuperAgent response object.
-    * @param {(String|Array.<String>|Object.<String, Object>|Function)} returnType The type to return. Pass a string for simple types
-    * or the constructor function for a complex type. Pass an array containing the type name to return an array of that type. To
-    * return an object, pass an object with one property whose name is the key type and whose value is the corresponding value type:
-    * all properties on <code>data<code> will be converted to this type.
-    * @returns A value of the specified type.
-    */
-    deserialize(response, returnType) {
-        if (response == null || returnType == null || response.status == 204) {
-            return null;
-        }
-
-        // Rely on SuperAgent for parsing response body.
-        // See http://visionmedia.github.io/superagent/#parsing-response-bodies
-        var data = response.body;
-        if (data == null || (typeof data === 'object' && typeof data.length === 'undefined' && !Object.keys(data).length)) {
-            // SuperAgent does not always produce a body; use the unparsed response as a fallback
-            data = response.text;
-        }
-
-        return ApiClient.convertToType(data, returnType);
-    }
-
-    /**
-    * Callback function to receive the result of the operation.
-    * @callback module:ApiClient~callApiCallback
-    * @param {String} error Error message, if any.
-    * @param data The data returned by the service call.
-    * @param {String} response The complete HTTP response.
-    */
-
-    /**
-    * Invokes the REST service using the supplied settings and parameters.
-    * @param {String} path The base URL to invoke.
-    * @param {String} httpMethod The HTTP method to use.
-    * @param {Object.<String, String>} pathParams A map of path parameters and their values.
-    * @param {Object.<String, Object>} queryParams A map of query parameters and their values.
-    * @param {Object.<String, Object>} headerParams A map of header parameters and their values.
-    * @param {Object.<String, Object>} formParams A map of form parameters and their values.
-    * @param {Object} bodyParam The value to pass as the request body.
-    * @param {Array.<String>} authNames An array of authentication type names.
-    * @param {Array.<String>} contentTypes An array of request MIME types.
-    * @param {Array.<String>} accepts An array of acceptable response MIME types.
-    * @param {(String|Array|ObjectFunction)} returnType The required type to return; can be a string for simple types or the
-    * constructor for a complex type.
-    * @param {module:ApiClient~callApiCallback} callback The callback function.
-    * @returns {Object} The SuperAgent request object.
-    */
-    callApi(path, httpMethod, pathParams,
-        queryParams, headerParams, formParams, bodyParam, authNames, contentTypes, accepts,
-        returnType, callback) {
-
-        var url = this.buildUrl(path, pathParams);
-        var request = superagent(httpMethod, url);
-
-        // apply authentications
-        this.applyAuthToRequest(request, authNames);
-
-        // set query parameters
-        if (httpMethod.toUpperCase() === 'GET' && this.cache === false) {
-            queryParams['_'] = new Date().getTime();
-        }
-
-        request.query(this.normalizeParams(queryParams));
-
-        // set header parameters
-        request.set(this.defaultHeaders).set(this.normalizeParams(headerParams));
-
-        // set requestAgent if it is set by user
-        if (this.requestAgent) {
-          request.agent(this.requestAgent);
-        }
-
-        // set request timeout
-        request.timeout(this.timeout);
-
-        var contentType = this.jsonPreferredMime(contentTypes);
-        if (contentType) {
-            // Issue with superagent and multipart/form-data (https://github.com/visionmedia/superagent/issues/746)
-            if(contentType != 'multipart/form-data') {
-                request.type(contentType);
-            }
-        } else if (!request.header['Content-Type']) {
-            request.type('application/json');
-        }
-
-        if (contentType === 'application/x-www-form-urlencoded') {
-            request.send(querystring.stringify(this.normalizeParams(formParams)));
-        } else if (contentType == 'multipart/form-data') {
-            var _formParams = this.normalizeParams(formParams);
-            for (var key in _formParams) {
-                if (_formParams.hasOwnProperty(key)) {
-                    if (this.isFileParam(_formParams[key])) {
-                        // file field
-                        request.attach(key, _formParams[key]);
-                    } else {
-                        request.field(key, _formParams[key]);
-                    }
-                }
-            }
-        } else if (bodyParam) {
-            request.send(bodyParam);
-        }
-
-        var accept = this.jsonPreferredMime(accepts);
-        if (accept) {
-            request.accept(accept);
-        }
-
-        if (returnType === 'Blob') {
-          request.responseType('blob');
-        } else if (returnType === 'String') {
-          request.responseType('string');
-        }
-
-        // Attach previously saved cookies, if enabled
-        if (this.enableCookies){
-            if (typeof window === 'undefined') {
-                this.agent.attachCookies(request);
-            }
-            else {
-                request.withCredentials();
-            }
-        }
-
-        
-
-        request.end((error, response) => {
-            if (callback) {
-                var data = null;
-                if (!error) {
-                    try {
-                        data = this.deserialize(response, returnType);
-                        if (this.enableCookies && typeof window === 'undefined'){
-                            this.agent.saveCookies(response);
-                        }
-                    } catch (err) {
-                        error = err;
-                    }
-                }
-
-                callback(error, data, response);
-            }
-        });
-
-        return request;
-    }
-
-    /**
-    * Parses an ISO-8601 string representation of a date value.
-    * @param {String} str The date value as a string.
-    * @returns {Date} The parsed date object.
-    */
-    static parseDate(str) {
-        return new Date(str);
-    }
-
-    /**
-    * Converts a value to the specified type.
-    * @param {(String|Object)} data The data to convert, as a string or object.
-    * @param {(String|Array.<String>|Object.<String, Object>|Function)} type The type to return. Pass a string for simple types
-    * or the constructor function for a complex type. Pass an array containing the type name to return an array of that type. To
-    * return an object, pass an object with one property whose name is the key type and whose value is the corresponding value type:
-    * all properties on <code>data<code> will be converted to this type.
-    * @returns An instance of the specified type or null or undefined if data is null or undefined.
-    */
-    static convertToType(data, type) {
-        if (data === null || data === undefined)
-            return data
-
-        switch (type) {
-            case 'Boolean':
-                return Boolean(data);
-            case 'Integer':
-                return parseInt(data, 10);
-            case 'Number':
-                return parseFloat(data);
-            case 'String':
-                return String(data);
-            case 'Date':
-                return ApiClient.parseDate(String(data));
-            case 'Blob':
-                return data;
-            default:
-                if (type === Object) {
-                    // generic object, return directly
-                    return data;
-                } else if (typeof type === 'function') {
-                    // for model type like: User
-                    return type.constructFromObject(data);
-                } else if (Array.isArray(type)) {
-                    // for array type like: ['String']
-                    var itemType = type[0];
-
-                    return data.map((item) => {
-                        return ApiClient.convertToType(item, itemType);
-                    });
-                } else if (typeof type === 'object') {
-                    // for plain object type like: {'String': 'Integer'}
-                    var keyType, valueType;
-                    for (var k in type) {
-                        if (type.hasOwnProperty(k)) {
-                            keyType = k;
-                            valueType = type[k];
-                            break;
-                        }
-                    }
-
-                    var result = {};
-                    for (var k in data) {
-                        if (data.hasOwnProperty(k)) {
-                            var key = ApiClient.convertToType(k, keyType);
-                            var value = ApiClient.convertToType(data[k], valueType);
-                            result[key] = value;
-                        }
-                    }
-
-                    return result;
-                } else {
-                    // for unknown type, return the data directly
-                    return data;
-                }
-        }
-    }
-
-    /**
-    * Constructs a new map or array model from REST data.
-    * @param data {Object|Array} The REST data.
-    * @param obj {Object|Array} The target object or array.
-    */
-    static constructFromObject(data, obj, itemType) {
-        if (Array.isArray(data)) {
-            for (var i = 0; i < data.length; i++) {
-                if (data.hasOwnProperty(i))
-                    obj[i] = ApiClient.convertToType(data[i], itemType);
-            }
+  /**
+   * Normalizes parameter values:
+   * <ul>
+   * <li>remove nils</li>
+   * <li>keep files and arrays</li>
+   * <li>format to string with `paramToString` for other cases</li>
+   * </ul>
+   * @param {Object.<String, Object>} params The parameters as object properties.
+   * @returns {Object.<String, Object>} normalized parameters.
+   */
+  normalizeParams(params) {
+    var newParams = {};
+    for (var key in params) {
+      if (
+        params.hasOwnProperty(key) &&
+        params[key] != undefined &&
+        params[key] != null
+      ) {
+        var value = params[key];
+        if (this.isFileParam(value) || Array.isArray(value)) {
+          newParams[key] = value;
         } else {
-            for (var k in data) {
-                if (data.hasOwnProperty(k))
-                    obj[k] = ApiClient.convertToType(data[k], itemType);
-            }
+          newParams[key] = this.paramToString(value);
         }
-    };
+      }
+    }
+
+    return newParams;
+  }
+
+  /**
+   * Enumeration of collection format separator strategies.
+   * @enum {String}
+   * @readonly
+   */
+  static CollectionFormatEnum = {
+    /**
+     * Comma-separated values. Value: <code>csv</code>
+     * @const
+     */
+    CSV: ",",
+
+    /**
+     * Space-separated values. Value: <code>ssv</code>
+     * @const
+     */
+    SSV: " ",
+
+    /**
+     * Tab-separated values. Value: <code>tsv</code>
+     * @const
+     */
+    TSV: "\t",
+
+    /**
+     * Pipe(|)-separated values. Value: <code>pipes</code>
+     * @const
+     */
+    PIPES: "|",
+
+    /**
+     * Native array. Value: <code>multi</code>
+     * @const
+     */
+    MULTI: "multi",
+  };
+
+  /**
+   * Builds a string representation of an array-type actual parameter, according to the given collection format.
+   * @param {Array} param An array parameter.
+   * @param {module:ApiClient.CollectionFormatEnum} collectionFormat The array element separator strategy.
+   * @returns {String|Array} A string representation of the supplied collection, using the specified delimiter. Returns
+   * <code>param</code> as is if <code>collectionFormat</code> is <code>multi</code>.
+   */
+  buildCollectionParam(param, collectionFormat) {
+    if (param == null) {
+      return null;
+    }
+    switch (collectionFormat) {
+      case "csv":
+        return param.map(this.paramToString).join(",");
+      case "ssv":
+        return param.map(this.paramToString).join(" ");
+      case "tsv":
+        return param.map(this.paramToString).join("\t");
+      case "pipes":
+        return param.map(this.paramToString).join("|");
+      case "multi":
+        //return the array directly as SuperAgent will handle it as expected
+        return param.map(this.paramToString);
+      default:
+        throw new Error("Unknown collection format: " + collectionFormat);
+    }
+  }
+
+  /**
+   * Applies authentication headers to the request.
+   * @param {Object} request The request object created by a <code>superagent()</code> call.
+   * @param {Array.<String>} authNames An array of authentication method names.
+   */
+  applyAuthToRequest(request, authNames) {
+    authNames.forEach((authName) => {
+      var auth = this.authentications[authName];
+      switch (auth.type) {
+        case "basic":
+          if (auth.username || auth.password) {
+            request.auth(auth.username || "", auth.password || "");
+          }
+
+          break;
+        case "apiKey":
+          if (auth.apiKey) {
+            var data = {};
+            if (auth.apiKeyPrefix) {
+              data[auth.name] = auth.apiKeyPrefix + " " + auth.apiKey;
+            } else {
+              data[auth.name] = auth.apiKey;
+            }
+
+            if (auth["in"] === "header") {
+              request.set(data);
+            } else {
+              request.query(data);
+            }
+          }
+
+          break;
+        case "oauth2":
+          if (auth.accessToken) {
+            request.set({ Authorization: "Bearer " + auth.accessToken });
+          }
+
+          break;
+        default:
+          throw new Error("Unknown authentication type: " + auth.type);
+      }
+    });
+  }
+
+  /**
+   * Deserializes an HTTP response body into a value of the specified type.
+   * @param {Object} response A SuperAgent response object.
+   * @param {(String|Array.<String>|Object.<String, Object>|Function)} returnType The type to return. Pass a string for simple types
+   * or the constructor function for a complex type. Pass an array containing the type name to return an array of that type. To
+   * return an object, pass an object with one property whose name is the key type and whose value is the corresponding value type:
+   * all properties on <code>data<code> will be converted to this type.
+   * @returns A value of the specified type.
+   */
+  deserialize(response, returnType) {
+    if (response == null || returnType == null || response.status == 204) {
+      return null;
+    }
+
+    // Rely on SuperAgent for parsing response body.
+    // See http://visionmedia.github.io/superagent/#parsing-response-bodies
+    var data = response.body;
+    if (
+      data == null ||
+      (typeof data === "object" &&
+        typeof data.length === "undefined" &&
+        !Object.keys(data).length)
+    ) {
+      // SuperAgent does not always produce a body; use the unparsed response as a fallback
+      data = response.text;
+    }
+
+    return ApiClient.convertToType(data, returnType);
+  }
+
+  /**
+   * Callback function to receive the result of the operation.
+   * @callback module:ApiClient~callApiCallback
+   * @param {String} error Error message, if any.
+   * @param data The data returned by the service call.
+   * @param {String} response The complete HTTP response.
+   */
+
+  /**
+   * Invokes the REST service using the supplied settings and parameters.
+   * @param {String} path The base URL to invoke.
+   * @param {String} httpMethod The HTTP method to use.
+   * @param {Object.<String, String>} pathParams A map of path parameters and their values.
+   * @param {Object.<String, Object>} queryParams A map of query parameters and their values.
+   * @param {Object.<String, Object>} headerParams A map of header parameters and their values.
+   * @param {Object.<String, Object>} formParams A map of form parameters and their values.
+   * @param {Object} bodyParam The value to pass as the request body.
+   * @param {Array.<String>} authNames An array of authentication type names.
+   * @param {Array.<String>} contentTypes An array of request MIME types.
+   * @param {Array.<String>} accepts An array of acceptable response MIME types.
+   * @param {(String|Array|ObjectFunction)} returnType The required type to return; can be a string for simple types or the
+   * constructor for a complex type.
+   * @param {module:ApiClient~callApiCallback} callback The callback function.
+   * @returns {Object} The SuperAgent request object.
+   */
+  callApi(
+    path,
+    httpMethod,
+    pathParams,
+    queryParams,
+    headerParams,
+    formParams,
+    bodyParam,
+    authNames,
+    contentTypes,
+    accepts,
+    returnType,
+    callback
+  ) {
+    var url = this.buildUrl(path, pathParams);
+    var request = superagent(httpMethod, url);
+
+    // apply authentications
+    this.applyAuthToRequest(request, authNames);
+
+    // set query parameters
+    if (httpMethod.toUpperCase() === "GET" && this.cache === false) {
+      queryParams["_"] = new Date().getTime();
+    }
+
+    request.query(this.normalizeParams(queryParams));
+
+    // set header parameters
+    request.set(this.defaultHeaders).set(this.normalizeParams(headerParams));
+
+    // set requestAgent if it is set by user
+    if (this.requestAgent) {
+      request.agent(this.requestAgent);
+    }
+
+    // set request timeout
+    request.timeout(this.timeout);
+
+    var contentType = this.jsonPreferredMime(contentTypes);
+    if (contentType) {
+      // Issue with superagent and multipart/form-data (https://github.com/visionmedia/superagent/issues/746)
+      if (contentType != "multipart/form-data") {
+        request.type(contentType);
+      }
+    } else if (!request.header["Content-Type"]) {
+      request.type("application/json");
+    }
+
+    if (contentType === "application/x-www-form-urlencoded") {
+      request.send(querystring.stringify(this.normalizeParams(formParams)));
+    } else if (contentType == "multipart/form-data") {
+      var _formParams = this.normalizeParams(formParams);
+      for (var key in _formParams) {
+        if (_formParams.hasOwnProperty(key)) {
+          if (this.isFileParam(_formParams[key])) {
+            // file field
+            request.attach(key, _formParams[key]);
+          } else {
+            request.field(key, _formParams[key]);
+          }
+        }
+      }
+    } else if (bodyParam) {
+      request.send(bodyParam);
+    }
+
+    var accept = this.jsonPreferredMime(accepts);
+    if (accept) {
+      request.accept(accept);
+    }
+
+    if (returnType === "Blob") {
+      request.responseType("blob");
+    } else if (returnType === "String") {
+      request.responseType("string");
+    }
+
+    // Attach previously saved cookies, if enabled
+    if (this.enableCookies) {
+      if (typeof window === "undefined") {
+        this.agent.attachCookies(request);
+      } else {
+        request.withCredentials();
+      }
+    }
+
+    request.end((error, response) => {
+      if (callback) {
+        var data = null;
+        if (!error) {
+          try {
+            data = this.deserialize(response, returnType);
+            if (this.enableCookies && typeof window === "undefined") {
+              this.agent.saveCookies(response);
+            }
+          } catch (err) {
+            error = err;
+          }
+        }
+
+        callback(error, data, response);
+      }
+    });
+
+    return request;
+  }
+
+  /**
+   * Parses an ISO-8601 string representation of a date value.
+   * @param {String} str The date value as a string.
+   * @returns {Date} The parsed date object.
+   */
+  static parseDate(str) {
+    return new Date(str);
+  }
+
+  /**
+   * Converts a value to the specified type.
+   * @param {(String|Object)} data The data to convert, as a string or object.
+   * @param {(String|Array.<String>|Object.<String, Object>|Function)} type The type to return. Pass a string for simple types
+   * or the constructor function for a complex type. Pass an array containing the type name to return an array of that type. To
+   * return an object, pass an object with one property whose name is the key type and whose value is the corresponding value type:
+   * all properties on <code>data<code> will be converted to this type.
+   * @returns An instance of the specified type or null or undefined if data is null or undefined.
+   */
+  static convertToType(data, type) {
+    if (data === null || data === undefined) return data;
+
+    switch (type) {
+      case "Boolean":
+        return Boolean(data);
+      case "Integer":
+        return parseInt(data, 10);
+      case "Number":
+        return parseFloat(data);
+      case "String":
+        return String(data);
+      case "Date":
+        return ApiClient.parseDate(String(data));
+      case "Blob":
+        return data;
+      default:
+        if (type === Object) {
+          // generic object, return directly
+          return data;
+        } else if (typeof type === "function") {
+          // for model type like: User
+          return type.constructFromObject(data);
+        } else if (Array.isArray(type)) {
+          // for array type like: ['String']
+          var itemType = type[0];
+
+          return data.map((item) => {
+            return ApiClient.convertToType(item, itemType);
+          });
+        } else if (typeof type === "object") {
+          // for plain object type like: {'String': 'Integer'}
+          var keyType, valueType;
+          for (var k in type) {
+            if (type.hasOwnProperty(k)) {
+              keyType = k;
+              valueType = type[k];
+              break;
+            }
+          }
+
+          var result = {};
+          for (var k in data) {
+            if (data.hasOwnProperty(k)) {
+              var key = ApiClient.convertToType(k, keyType);
+              var value = ApiClient.convertToType(data[k], valueType);
+              result[key] = value;
+            }
+          }
+
+          return result;
+        } else {
+          // for unknown type, return the data directly
+          return data;
+        }
+    }
+  }
+
+  /**
+   * Constructs a new map or array model from REST data.
+   * @param data {Object|Array} The REST data.
+   * @param obj {Object|Array} The target object or array.
+   */
+  static constructFromObject(data, obj, itemType) {
+    if (Array.isArray(data)) {
+      for (var i = 0; i < data.length; i++) {
+        if (data.hasOwnProperty(i))
+          obj[i] = ApiClient.convertToType(data[i], itemType);
+      }
+    } else {
+      for (var k in data) {
+        if (data.hasOwnProperty(k))
+          obj[k] = ApiClient.convertToType(data[k], itemType);
+      }
+    }
+  }
 }
 
 /**
-* The default API client implementation.
-* @type {module:ApiClient}
-*/
+ * The default API client implementation.
+ * @type {module:ApiClient}
+ */
 ApiClient.instance = new ApiClient();
 
 /*
@@ -614,8 +631,7 @@ class SNMPCollector {
    * @alias module:model/SNMPCollector
    * @class
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Constructs a <code>SNMPCollector</code> from a plain JavaScript object, optionally creating a new instance.
@@ -627,20 +643,26 @@ class SNMPCollector {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new SNMPCollector();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
-      if (data.hasOwnProperty('devicenum'))
-        obj.devicenum = ApiClient.convertToType(data['devicenum'], 'Number');
-      if (data.hasOwnProperty('kpinum'))
-        obj.kpinum = ApiClient.convertToType(data['kpinum'], 'Number');
-      if (data.hasOwnProperty('communitystr'))
-        obj.communitystr = ApiClient.convertToType(data['communitystr'], 'String');
-      if (data.hasOwnProperty('collectorvm'))
-        obj.collectorvm = ApiClient.convertToType(data['collectorvm'], 'String');
-      if (data.hasOwnProperty('collectorVM'))
-        obj.collectorVM = ApiClient.convertToType(data['collectorVM'], Object);
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
+      if (data.hasOwnProperty("devicenum"))
+        obj.devicenum = ApiClient.convertToType(data["devicenum"], "Number");
+      if (data.hasOwnProperty("kpinum"))
+        obj.kpinum = ApiClient.convertToType(data["kpinum"], "Number");
+      if (data.hasOwnProperty("communitystr"))
+        obj.communitystr = ApiClient.convertToType(
+          data["communitystr"],
+          "String"
+        );
+      if (data.hasOwnProperty("collectorvm"))
+        obj.collectorvm = ApiClient.convertToType(
+          data["collectorvm"],
+          "String"
+        );
+      if (data.hasOwnProperty("collectorVM"))
+        obj.collectorVM = ApiClient.convertToType(data["collectorVM"], Object);
     }
     return obj;
   }
@@ -714,8 +736,7 @@ class AllOfDeviceSNMPCollector {
    * @alias module:model/AllOfDeviceSNMPCollector
    * @class
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Constructs a <code>AllOfDeviceSNMPCollector</code> from a plain JavaScript object, optionally creating a new instance.
@@ -727,20 +748,26 @@ class AllOfDeviceSNMPCollector {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new AllOfDeviceSNMPCollector();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
-      if (data.hasOwnProperty('devicenum'))
-        obj.devicenum = ApiClient.convertToType(data['devicenum'], 'Number');
-      if (data.hasOwnProperty('kpinum'))
-        obj.kpinum = ApiClient.convertToType(data['kpinum'], 'Number');
-      if (data.hasOwnProperty('communitystr'))
-        obj.communitystr = ApiClient.convertToType(data['communitystr'], 'String');
-      if (data.hasOwnProperty('collectorvm'))
-        obj.collectorvm = ApiClient.convertToType(data['collectorvm'], 'String');
-      if (data.hasOwnProperty('collectorVM'))
-        obj.collectorVM = ApiClient.convertToType(data['collectorVM'], Object);
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
+      if (data.hasOwnProperty("devicenum"))
+        obj.devicenum = ApiClient.convertToType(data["devicenum"], "Number");
+      if (data.hasOwnProperty("kpinum"))
+        obj.kpinum = ApiClient.convertToType(data["kpinum"], "Number");
+      if (data.hasOwnProperty("communitystr"))
+        obj.communitystr = ApiClient.convertToType(
+          data["communitystr"],
+          "String"
+        );
+      if (data.hasOwnProperty("collectorvm"))
+        obj.collectorvm = ApiClient.convertToType(
+          data["collectorvm"],
+          "String"
+        );
+      if (data.hasOwnProperty("collectorVM"))
+        obj.collectorVM = ApiClient.convertToType(data["collectorVM"], Object);
     }
     return obj;
   }
@@ -814,8 +841,7 @@ class SNMPMIB {
    * @alias module:model/SNMPMIB
    * @class
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Constructs a <code>SNMPMIB</code> from a plain JavaScript object, optionally creating a new instance.
@@ -827,12 +853,12 @@ class SNMPMIB {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new SNMPMIB();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
-      if (data.hasOwnProperty('file'))
-        obj.file = ApiClient.convertToType(data['file'], 'String');
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
+      if (data.hasOwnProperty("file"))
+        obj.file = ApiClient.convertToType(data["file"], "String");
     }
     return obj;
   }
@@ -883,8 +909,7 @@ class AllOfMetricSNMPMIB {
    * @alias module:model/AllOfMetricSNMPMIB
    * @class
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Constructs a <code>AllOfMetricSNMPMIB</code> from a plain JavaScript object, optionally creating a new instance.
@@ -896,12 +921,12 @@ class AllOfMetricSNMPMIB {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new AllOfMetricSNMPMIB();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
-      if (data.hasOwnProperty('file'))
-        obj.file = ApiClient.convertToType(data['file'], 'String');
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
+      if (data.hasOwnProperty("file"))
+        obj.file = ApiClient.convertToType(data["file"], "String");
     }
     return obj;
   }
@@ -952,8 +977,7 @@ class AllOfMonObjSNMPMIB {
    * @alias module:model/AllOfMonObjSNMPMIB
    * @class
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Constructs a <code>AllOfMonObjSNMPMIB</code> from a plain JavaScript object, optionally creating a new instance.
@@ -965,12 +989,12 @@ class AllOfMonObjSNMPMIB {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new AllOfMonObjSNMPMIB();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
-      if (data.hasOwnProperty('file'))
-        obj.file = ApiClient.convertToType(data['file'], 'String');
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
+      if (data.hasOwnProperty("file"))
+        obj.file = ApiClient.convertToType(data["file"], "String");
     }
     return obj;
   }
@@ -1021,8 +1045,7 @@ class CollectorVM {
    * @alias module:model/CollectorVM
    * @class
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Constructs a <code>CollectorVM</code> from a plain JavaScript object, optionally creating a new instance.
@@ -1034,14 +1057,14 @@ class CollectorVM {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new CollectorVM();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('ip'))
-        obj.ip = ApiClient.convertToType(data['ip'], 'String');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
-      if (data.hasOwnProperty('province'))
-        obj.province = ApiClient.convertToType(data['province'], 'String');
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("ip"))
+        obj.ip = ApiClient.convertToType(data["ip"], "String");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
+      if (data.hasOwnProperty("province"))
+        obj.province = ApiClient.convertToType(data["province"], "String");
     }
     return obj;
   }
@@ -1098,8 +1121,7 @@ class AllOfSNMPCollectorCollectorVM {
    * @alias module:model/AllOfSNMPCollectorCollectorVM
    * @class
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Constructs a <code>AllOfSNMPCollectorCollectorVM</code> from a plain JavaScript object, optionally creating a new instance.
@@ -1111,14 +1133,14 @@ class AllOfSNMPCollectorCollectorVM {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new AllOfSNMPCollectorCollectorVM();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('ip'))
-        obj.ip = ApiClient.convertToType(data['ip'], 'String');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
-      if (data.hasOwnProperty('province'))
-        obj.province = ApiClient.convertToType(data['province'], 'String');
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("ip"))
+        obj.ip = ApiClient.convertToType(data["ip"], "String");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
+      if (data.hasOwnProperty("province"))
+        obj.province = ApiClient.convertToType(data["province"], "String");
     }
     return obj;
   }
@@ -1175,8 +1197,7 @@ class CommunityStr {
    * @alias module:model/CommunityStr
    * @class
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Constructs a <code>CommunityStr</code> from a plain JavaScript object, optionally creating a new instance.
@@ -1188,10 +1209,10 @@ class CommunityStr {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new CommunityStr();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
     }
     return obj;
   }
@@ -1235,7 +1256,7 @@ class Device {
    * Constructs a new <code>Device</code>.
    * @alias module:model/Device
    * @class
-   * @param sNMPCollector {Object} 
+   * @param sNMPCollector {Object}
    */
   constructor(sNMPCollector) {
     this.sNMPCollector = sNMPCollector;
@@ -1251,32 +1272,41 @@ class Device {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new Device();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
-      if (data.hasOwnProperty('wname'))
-        obj.wname = ApiClient.convertToType(data['wname'], 'String');
-      if (data.hasOwnProperty('model'))
-        obj.model = ApiClient.convertToType(data['model'], 'String');
-      if (data.hasOwnProperty('vendor'))
-        obj.vendor = ApiClient.convertToType(data['vendor'], 'String');
-      if (data.hasOwnProperty('ip'))
-        obj.ip = ApiClient.convertToType(data['ip'], 'String');
-      if (data.hasOwnProperty('communitystr'))
-        obj.communitystr = ApiClient.convertToType(data['communitystr'], 'String');
-      if (data.hasOwnProperty('devicetype'))
-        obj.devicetype = ApiClient.convertToType(data['devicetype'], 'String');
-      if (data.hasOwnProperty('province'))
-        obj.province = ApiClient.convertToType(data['province'], 'String');
-      if (data.hasOwnProperty('snmpcollector'))
-        obj.snmpcollector = ApiClient.convertToType(data['snmpcollector'], 'String');
-      if (data.hasOwnProperty('kpinum'))
-        obj.kpinum = ApiClient.convertToType(data['kpinum'], 'Number');
-      if (data.hasOwnProperty('monobj'))
-        obj.monobj = ApiClient.convertToType(data['monobj'], 'String');
-      if (data.hasOwnProperty('sNMPCollector'))
-        obj.sNMPCollector = ApiClient.convertToType(data['sNMPCollector'], Object);
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
+      if (data.hasOwnProperty("wname"))
+        obj.wname = ApiClient.convertToType(data["wname"], "String");
+      if (data.hasOwnProperty("model"))
+        obj.model = ApiClient.convertToType(data["model"], "String");
+      if (data.hasOwnProperty("vendor"))
+        obj.vendor = ApiClient.convertToType(data["vendor"], "String");
+      if (data.hasOwnProperty("ip"))
+        obj.ip = ApiClient.convertToType(data["ip"], "String");
+      if (data.hasOwnProperty("communitystr"))
+        obj.communitystr = ApiClient.convertToType(
+          data["communitystr"],
+          "String"
+        );
+      if (data.hasOwnProperty("devicetype"))
+        obj.devicetype = ApiClient.convertToType(data["devicetype"], "String");
+      if (data.hasOwnProperty("province"))
+        obj.province = ApiClient.convertToType(data["province"], "String");
+      if (data.hasOwnProperty("snmpcollector"))
+        obj.snmpcollector = ApiClient.convertToType(
+          data["snmpcollector"],
+          "String"
+        );
+      if (data.hasOwnProperty("kpinum"))
+        obj.kpinum = ApiClient.convertToType(data["kpinum"], "Number");
+      if (data.hasOwnProperty("monobj"))
+        obj.monobj = ApiClient.convertToType(data["monobj"], "String");
+      if (data.hasOwnProperty("sNMPCollector"))
+        obj.sNMPCollector = ApiClient.convertToType(
+          data["sNMPCollector"],
+          Object
+        );
     }
     return obj;
   }
@@ -1386,8 +1416,7 @@ class DeviceType {
    * @alias module:model/DeviceType
    * @class
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Constructs a <code>DeviceType</code> from a plain JavaScript object, optionally creating a new instance.
@@ -1399,10 +1428,10 @@ class DeviceType {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new DeviceType();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
     }
     return obj;
   }
@@ -1446,7 +1475,7 @@ class Metric {
    * Constructs a new <code>Metric</code>.
    * @alias module:model/Metric
    * @class
-   * @param sNMPMIB {Object} 
+   * @param sNMPMIB {Object}
    */
   constructor(sNMPMIB) {
     this.sNMPMIB = sNMPMIB;
@@ -1462,18 +1491,18 @@ class Metric {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new Metric();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
-      if (data.hasOwnProperty('snmpmib'))
-        obj.snmpmib = ApiClient.convertToType(data['snmpmib'], 'String');
-      if (data.hasOwnProperty('oid'))
-        obj.oid = ApiClient.convertToType(data['oid'], 'String');
-      if (data.hasOwnProperty('monobj'))
-        obj.monobj = ApiClient.convertToType(data['monobj'], 'String');
-      if (data.hasOwnProperty('sNMPMIB'))
-        obj.sNMPMIB = ApiClient.convertToType(data['sNMPMIB'], Object);
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
+      if (data.hasOwnProperty("snmpmib"))
+        obj.snmpmib = ApiClient.convertToType(data["snmpmib"], "String");
+      if (data.hasOwnProperty("oid"))
+        obj.oid = ApiClient.convertToType(data["oid"], "String");
+      if (data.hasOwnProperty("monobj"))
+        obj.monobj = ApiClient.convertToType(data["monobj"], "String");
+      if (data.hasOwnProperty("sNMPMIB"))
+        obj.sNMPMIB = ApiClient.convertToType(data["sNMPMIB"], Object);
     }
     return obj;
   }
@@ -1540,8 +1569,8 @@ class MonObj {
    * Constructs a new <code>MonObj</code>.
    * @alias module:model/MonObj
    * @class
-   * @param sNMPMIB {Object} 
-   * @param metric {Array.<module:model/Metric>} 
+   * @param sNMPMIB {Object}
+   * @param metric {Array.<module:model/Metric>}
    */
   constructor(sNMPMIB, metric) {
     this.sNMPMIB = sNMPMIB;
@@ -1558,18 +1587,18 @@ class MonObj {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new MonObj();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
-      if (data.hasOwnProperty('oid'))
-        obj.oid = ApiClient.convertToType(data['oid'], 'String');
-      if (data.hasOwnProperty('snmpmib'))
-        obj.snmpmib = ApiClient.convertToType(data['snmpmib'], 'String');
-      if (data.hasOwnProperty('sNMPMIB'))
-        obj.sNMPMIB = ApiClient.convertToType(data['sNMPMIB'], Object);
-      if (data.hasOwnProperty('metric'))
-        obj.metric = ApiClient.convertToType(data['metric'], [Metric]);
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
+      if (data.hasOwnProperty("oid"))
+        obj.oid = ApiClient.convertToType(data["oid"], "String");
+      if (data.hasOwnProperty("snmpmib"))
+        obj.snmpmib = ApiClient.convertToType(data["snmpmib"], "String");
+      if (data.hasOwnProperty("sNMPMIB"))
+        obj.sNMPMIB = ApiClient.convertToType(data["sNMPMIB"], Object);
+      if (data.hasOwnProperty("metric"))
+        obj.metric = ApiClient.convertToType(data["metric"], [Metric]);
     }
     return obj;
   }
@@ -1636,8 +1665,7 @@ class Province {
    * @alias module:model/Province
    * @class
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Constructs a <code>Province</code> from a plain JavaScript object, optionally creating a new instance.
@@ -1649,10 +1677,10 @@ class Province {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new Province();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
     }
     return obj;
   }
@@ -1697,8 +1725,7 @@ class Vendor {
    * @alias module:model/Vendor
    * @class
    */
-  constructor() {
-  }
+  constructor() {}
 
   /**
    * Constructs a <code>Vendor</code> from a plain JavaScript object, optionally creating a new instance.
@@ -1710,10 +1737,10 @@ class Vendor {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new Vendor();
-      if (data.hasOwnProperty('id'))
-        obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('name'))
-        obj.name = ApiClient.convertToType(data['name'], 'String');
+      if (data.hasOwnProperty("id"))
+        obj.id = ApiClient.convertToType(data["id"], "Number");
+      if (data.hasOwnProperty("name"))
+        obj.name = ApiClient.convertToType(data["name"], "String");
     }
     return obj;
   }
@@ -1748,13 +1775,12 @@ Vendor.prototype.name = undefined;
  */
 
 /**
-* CollectorVM service.
-* @module api/CollectorVMApi
-* @version 2.0.0
-*/
+ * CollectorVM service.
+ * @module api/CollectorVMApi
+ * @version 2.0.0
+ */
 class CollectorVMApi {
-
-    /**
+  /**
     * Constructs a new CollectorVMApi. 
     * @alias module:api/CollectorVMApi
     * @class
@@ -1762,96 +1788,96 @@ class CollectorVMApi {
     * default to {@link module:ApiClient#instanc
     e} if unspecified.
     */
-    constructor(apiClient) {
-        this.apiClient = apiClient || ApiClient.instance;
-    }
+  constructor(apiClient) {
+    this.apiClient = apiClient || ApiClient.instance;
+  }
 
-    /**
-     * Callback function to receive the result of the addCollectorVM operation.
-     * @callback moduleapi/CollectorVMApi~addCollectorVMCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
+  /**
+   * Callback function to receive the result of the addCollectorVM operation.
+   * @callback moduleapi/CollectorVMApi~addCollectorVMCallback
+   * @param {String} error Error message, if any.
+   * @param data This operation does not return a value.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * Adds Collector VM
-     * Adds Collector VM to the system
-     * @param {Object} opts Optional parameters
-     * @param {module:model/CollectorVM} opts.body Inventory item to add
-     * @param {module:api/CollectorVMApi~addCollectorVMCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    addCollectorVM(opts, callback) {
-      opts = opts || {};
-      let postBody = opts['body'];
+  /**
+   * Adds Collector VM
+   * Adds Collector VM to the system
+   * @param {Object} opts Optional parameters
+   * @param {module:model/CollectorVM} opts.body Inventory item to add
+   * @param {module:api/CollectorVMApi~addCollectorVMCallback} callback The callback function, accepting three arguments: error, data, response
+   */
+  addCollectorVM(opts, callback) {
+    opts = opts || {};
+    let postBody = opts["body"];
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
-      let returnType = null;
+    let authNames = [];
+    let contentTypes = ["application/json"];
+    let accepts = [];
+    let returnType = null;
 
-      return this.apiClient.callApi(
-        '/collectorVM', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
-     * Callback function to receive the result of the searchCollectorVM operation.
-     * @callback moduleapi/CollectorVMApi~searchCollectorVMCallback
-     * @param {String} error Error message, if any.
-     * @param {Array.<module:model/CollectorVM>{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
+    return this.apiClient.callApi(
+      "/collectorVM",
+      "POST",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
+  /**
+   * Callback function to receive the result of the searchCollectorVM operation.
+   * @callback moduleapi/CollectorVMApi~searchCollectorVMCallback
+   * @param {String} error Error message, if any.
+   * @param {Array.<module:model/CollectorVM>{ data The data returned by the service call.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * searches Collector VM
-     * By passing in the appropriate options, you can search for available Collector VMs 
-     * @param {module:api/CollectorVMApi~searchCollectorVMCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
-     */
-    searchCollectorVM(callback) {
-      
-      let postBody = null;
+  /**
+   * searches Collector VM
+   * By passing in the appropriate options, you can search for available Collector VMs
+   * @param {module:api/CollectorVMApi~searchCollectorVMCallback} callback The callback function, accepting three arguments: error, data, response
+   * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+   */
+  searchCollectorVM(callback) {
+    let postBody = null;
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
-      let returnType = [CollectorVM];
+    let authNames = [];
+    let contentTypes = [];
+    let accepts = ["application/json"];
+    let returnType = [CollectorVM];
 
-      return this.apiClient.callApi(
-        '/collectorVM', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
+    return this.apiClient.callApi(
+      "/collectorVM",
+      "GET",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
 }
 
 /*
@@ -1871,13 +1897,12 @@ class CollectorVMApi {
  */
 
 /**
-* CommunityStr service.
-* @module api/CommunityStrApi
-* @version 2.0.0
-*/
+ * CommunityStr service.
+ * @module api/CommunityStrApi
+ * @version 2.0.0
+ */
 class CommunityStrApi {
-
-    /**
+  /**
     * Constructs a new CommunityStrApi. 
     * @alias module:api/CommunityStrApi
     * @class
@@ -1885,96 +1910,96 @@ class CommunityStrApi {
     * default to {@link module:ApiClient#instanc
     e} if unspecified.
     */
-    constructor(apiClient) {
-        this.apiClient = apiClient || ApiClient.instance;
-    }
+  constructor(apiClient) {
+    this.apiClient = apiClient || ApiClient.instance;
+  }
 
-    /**
-     * Callback function to receive the result of the addCommunityStr operation.
-     * @callback moduleapi/CommunityStrApi~addCommunityStrCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
+  /**
+   * Callback function to receive the result of the addCommunityStr operation.
+   * @callback moduleapi/CommunityStrApi~addCommunityStrCallback
+   * @param {String} error Error message, if any.
+   * @param data This operation does not return a value.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * Adds Monitored Objects
-     * Adds Community Strings to the system
-     * @param {Object} opts Optional parameters
-     * @param {module:model/CommunityStr} opts.body Inventory item to add
-     * @param {module:api/CommunityStrApi~addCommunityStrCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    addCommunityStr(opts, callback) {
-      opts = opts || {};
-      let postBody = opts['body'];
+  /**
+   * Adds Monitored Objects
+   * Adds Community Strings to the system
+   * @param {Object} opts Optional parameters
+   * @param {module:model/CommunityStr} opts.body Inventory item to add
+   * @param {module:api/CommunityStrApi~addCommunityStrCallback} callback The callback function, accepting three arguments: error, data, response
+   */
+  addCommunityStr(opts, callback) {
+    opts = opts || {};
+    let postBody = opts["body"];
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
-      let returnType = null;
+    let authNames = [];
+    let contentTypes = ["application/json"];
+    let accepts = [];
+    let returnType = null;
 
-      return this.apiClient.callApi(
-        '/CommunityStr', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
-     * Callback function to receive the result of the searcCommunityStr operation.
-     * @callback moduleapi/CommunityStrApi~searcCommunityStrCallback
-     * @param {String} error Error message, if any.
-     * @param {Array.<module:model/CommunityStr>{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
+    return this.apiClient.callApi(
+      "/CommunityStr",
+      "POST",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
+  /**
+   * Callback function to receive the result of the searcCommunityStr operation.
+   * @callback moduleapi/CommunityStrApi~searcCommunityStrCallback
+   * @param {String} error Error message, if any.
+   * @param {Array.<module:model/CommunityStr>{ data The data returned by the service call.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * searches Community Strings
-     * By passing in the appropriate options, you can search for available Community Strings 
-     * @param {module:api/CommunityStrApi~searcCommunityStrCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
-     */
-    searcCommunityStr(callback) {
-      
-      let postBody = null;
+  /**
+   * searches Community Strings
+   * By passing in the appropriate options, you can search for available Community Strings
+   * @param {module:api/CommunityStrApi~searcCommunityStrCallback} callback The callback function, accepting three arguments: error, data, response
+   * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+   */
+  searcCommunityStr(callback) {
+    let postBody = null;
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
-      let returnType = [CommunityStr];
+    let authNames = [];
+    let contentTypes = [];
+    let accepts = ["application/json"];
+    let returnType = [CommunityStr];
 
-      return this.apiClient.callApi(
-        '/CommunityStr', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
+    return this.apiClient.callApi(
+      "/CommunityStr",
+      "GET",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
 }
 
 /*
@@ -1994,13 +2019,12 @@ class CommunityStrApi {
  */
 
 /**
-* Device service.
-* @module api/DeviceApi
-* @version 2.0.0
-*/
+ * Device service.
+ * @module api/DeviceApi
+ * @version 2.0.0
+ */
 class DeviceApi {
-
-    /**
+  /**
     * Constructs a new DeviceApi. 
     * @alias module:api/DeviceApi
     * @class
@@ -2008,96 +2032,96 @@ class DeviceApi {
     * default to {@link module:ApiClient#instanc
     e} if unspecified.
     */
-    constructor(apiClient) {
-        this.apiClient = apiClient || ApiClient.instance;
-    }
+  constructor(apiClient) {
+    this.apiClient = apiClient || ApiClient.instance;
+  }
 
-    /**
-     * Callback function to receive the result of the addDevice operation.
-     * @callback moduleapi/DeviceApi~addDeviceCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
+  /**
+   * Callback function to receive the result of the addDevice operation.
+   * @callback moduleapi/DeviceApi~addDeviceCallback
+   * @param {String} error Error message, if any.
+   * @param data This operation does not return a value.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * Adds SNMP Devices
-     * Adds Devices to the system
-     * @param {Object} opts Optional parameters
-     * @param {module:model/Device} opts.body Inventory item to add
-     * @param {module:api/DeviceApi~addDeviceCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    addDevice(opts, callback) {
-      opts = opts || {};
-      let postBody = opts['body'];
+  /**
+   * Adds SNMP Devices
+   * Adds Devices to the system
+   * @param {Object} opts Optional parameters
+   * @param {module:model/Device} opts.body Inventory item to add
+   * @param {module:api/DeviceApi~addDeviceCallback} callback The callback function, accepting three arguments: error, data, response
+   */
+  addDevice(opts, callback) {
+    opts = opts || {};
+    let postBody = opts["body"];
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
-      let returnType = null;
+    let authNames = [];
+    let contentTypes = ["application/json"];
+    let accepts = [];
+    let returnType = null;
 
-      return this.apiClient.callApi(
-        '/Device', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
-     * Callback function to receive the result of the searchDevice operation.
-     * @callback moduleapi/DeviceApi~searchDeviceCallback
-     * @param {String} error Error message, if any.
-     * @param {Array.<module:model/Device>{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
+    return this.apiClient.callApi(
+      "/Device",
+      "POST",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
+  /**
+   * Callback function to receive the result of the searchDevice operation.
+   * @callback moduleapi/DeviceApi~searchDeviceCallback
+   * @param {String} error Error message, if any.
+   * @param {Array.<module:model/Device>{ data The data returned by the service call.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * searches SNMP Devices
-     * By passing in the appropriate options, you can search for available Devices 
-     * @param {module:api/DeviceApi~searchDeviceCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
-     */
-    searchDevice(callback) {
-      
-      let postBody = null;
+  /**
+   * searches SNMP Devices
+   * By passing in the appropriate options, you can search for available Devices
+   * @param {module:api/DeviceApi~searchDeviceCallback} callback The callback function, accepting three arguments: error, data, response
+   * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+   */
+  searchDevice(callback) {
+    let postBody = null;
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
-      let returnType = [Device];
+    let authNames = [];
+    let contentTypes = [];
+    let accepts = ["application/json"];
+    let returnType = [Device];
 
-      return this.apiClient.callApi(
-        '/Device', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
+    return this.apiClient.callApi(
+      "/Device",
+      "GET",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
 }
 
 /*
@@ -2117,13 +2141,12 @@ class DeviceApi {
  */
 
 /**
-* DeviceType service.
-* @module api/DeviceTypeApi
-* @version 2.0.0
-*/
+ * DeviceType service.
+ * @module api/DeviceTypeApi
+ * @version 2.0.0
+ */
 class DeviceTypeApi {
-
-    /**
+  /**
     * Constructs a new DeviceTypeApi. 
     * @alias module:api/DeviceTypeApi
     * @class
@@ -2131,96 +2154,96 @@ class DeviceTypeApi {
     * default to {@link module:ApiClient#instanc
     e} if unspecified.
     */
-    constructor(apiClient) {
-        this.apiClient = apiClient || ApiClient.instance;
-    }
+  constructor(apiClient) {
+    this.apiClient = apiClient || ApiClient.instance;
+  }
 
-    /**
-     * Callback function to receive the result of the addDeviceType operation.
-     * @callback moduleapi/DeviceTypeApi~addDeviceTypeCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
+  /**
+   * Callback function to receive the result of the addDeviceType operation.
+   * @callback moduleapi/DeviceTypeApi~addDeviceTypeCallback
+   * @param {String} error Error message, if any.
+   * @param data This operation does not return a value.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * Adds Device Types
-     * Adds Device Types to the system
-     * @param {Object} opts Optional parameters
-     * @param {module:model/DeviceType} opts.body Inventory item to add
-     * @param {module:api/DeviceTypeApi~addDeviceTypeCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    addDeviceType(opts, callback) {
-      opts = opts || {};
-      let postBody = opts['body'];
+  /**
+   * Adds Device Types
+   * Adds Device Types to the system
+   * @param {Object} opts Optional parameters
+   * @param {module:model/DeviceType} opts.body Inventory item to add
+   * @param {module:api/DeviceTypeApi~addDeviceTypeCallback} callback The callback function, accepting three arguments: error, data, response
+   */
+  addDeviceType(opts, callback) {
+    opts = opts || {};
+    let postBody = opts["body"];
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
-      let returnType = null;
+    let authNames = [];
+    let contentTypes = ["application/json"];
+    let accepts = [];
+    let returnType = null;
 
-      return this.apiClient.callApi(
-        '/DeviceType', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
-     * Callback function to receive the result of the searchDeviceType operation.
-     * @callback moduleapi/DeviceTypeApi~searchDeviceTypeCallback
-     * @param {String} error Error message, if any.
-     * @param {Array.<module:model/DeviceType>{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
+    return this.apiClient.callApi(
+      "/DeviceType",
+      "POST",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
+  /**
+   * Callback function to receive the result of the searchDeviceType operation.
+   * @callback moduleapi/DeviceTypeApi~searchDeviceTypeCallback
+   * @param {String} error Error message, if any.
+   * @param {Array.<module:model/DeviceType>{ data The data returned by the service call.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * searches Device Types
-     * By passing in the appropriate options, you can search for available Device types 
-     * @param {module:api/DeviceTypeApi~searchDeviceTypeCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
-     */
-    searchDeviceType(callback) {
-      
-      let postBody = null;
+  /**
+   * searches Device Types
+   * By passing in the appropriate options, you can search for available Device types
+   * @param {module:api/DeviceTypeApi~searchDeviceTypeCallback} callback The callback function, accepting three arguments: error, data, response
+   * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+   */
+  searchDeviceType(callback) {
+    let postBody = null;
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
-      let returnType = [DeviceType];
+    let authNames = [];
+    let contentTypes = [];
+    let accepts = ["application/json"];
+    let returnType = [DeviceType];
 
-      return this.apiClient.callApi(
-        '/DeviceType', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
+    return this.apiClient.callApi(
+      "/DeviceType",
+      "GET",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
 }
 
 /*
@@ -2240,13 +2263,12 @@ class DeviceTypeApi {
  */
 
 /**
-* Metric service.
-* @module api/MetricApi
-* @version 2.0.0
-*/
+ * Metric service.
+ * @module api/MetricApi
+ * @version 2.0.0
+ */
 class MetricApi {
-
-    /**
+  /**
     * Constructs a new MetricApi. 
     * @alias module:api/MetricApi
     * @class
@@ -2254,96 +2276,96 @@ class MetricApi {
     * default to {@link module:ApiClient#instanc
     e} if unspecified.
     */
-    constructor(apiClient) {
-        this.apiClient = apiClient || ApiClient.instance;
-    }
+  constructor(apiClient) {
+    this.apiClient = apiClient || ApiClient.instance;
+  }
 
-    /**
-     * Callback function to receive the result of the addMetric operation.
-     * @callback moduleapi/MetricApi~addMetricCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
+  /**
+   * Callback function to receive the result of the addMetric operation.
+   * @callback moduleapi/MetricApi~addMetricCallback
+   * @param {String} error Error message, if any.
+   * @param data This operation does not return a value.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * Adds Monitored Objects
-     * Adds Metrics to the system
-     * @param {Object} opts Optional parameters
-     * @param {module:model/Metric} opts.body Metric to add
-     * @param {module:api/MetricApi~addMetricCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    addMetric(opts, callback) {
-      opts = opts || {};
-      let postBody = opts['body'];
+  /**
+   * Adds Monitored Objects
+   * Adds Metrics to the system
+   * @param {Object} opts Optional parameters
+   * @param {module:model/Metric} opts.body Metric to add
+   * @param {module:api/MetricApi~addMetricCallback} callback The callback function, accepting three arguments: error, data, response
+   */
+  addMetric(opts, callback) {
+    opts = opts || {};
+    let postBody = opts["body"];
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
-      let returnType = null;
+    let authNames = [];
+    let contentTypes = ["application/json"];
+    let accepts = [];
+    let returnType = null;
 
-      return this.apiClient.callApi(
-        '/Metric', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
-     * Callback function to receive the result of the searcMetric operation.
-     * @callback moduleapi/MetricApi~searcMetricCallback
-     * @param {String} error Error message, if any.
-     * @param {Array.<module:model/Metric>{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
+    return this.apiClient.callApi(
+      "/Metric",
+      "POST",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
+  /**
+   * Callback function to receive the result of the searcMetric operation.
+   * @callback moduleapi/MetricApi~searcMetricCallback
+   * @param {String} error Error message, if any.
+   * @param {Array.<module:model/Metric>{ data The data returned by the service call.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * searches Monitored Objects
-     * By passing in the appropriate options, you can search for available Metrics 
-     * @param {module:api/MetricApi~searcMetricCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
-     */
-    searcMetric(callback) {
-      
-      let postBody = null;
+  /**
+   * searches Monitored Objects
+   * By passing in the appropriate options, you can search for available Metrics
+   * @param {module:api/MetricApi~searcMetricCallback} callback The callback function, accepting three arguments: error, data, response
+   * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+   */
+  searcMetric(callback) {
+    let postBody = null;
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
-      let returnType = [Metric];
+    let authNames = [];
+    let contentTypes = [];
+    let accepts = ["application/json"];
+    let returnType = [Metric];
 
-      return this.apiClient.callApi(
-        '/Metric', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
+    return this.apiClient.callApi(
+      "/Metric",
+      "GET",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
 }
 
 /*
@@ -2363,13 +2385,12 @@ class MetricApi {
  */
 
 /**
-* MonObj service.
-* @module api/MonObjApi
-* @version 2.0.0
-*/
+ * MonObj service.
+ * @module api/MonObjApi
+ * @version 2.0.0
+ */
 class MonObjApi {
-
-    /**
+  /**
     * Constructs a new MonObjApi. 
     * @alias module:api/MonObjApi
     * @class
@@ -2377,96 +2398,96 @@ class MonObjApi {
     * default to {@link module:ApiClient#instanc
     e} if unspecified.
     */
-    constructor(apiClient) {
-        this.apiClient = apiClient || ApiClient.instance;
-    }
+  constructor(apiClient) {
+    this.apiClient = apiClient || ApiClient.instance;
+  }
 
-    /**
-     * Callback function to receive the result of the addMonObj operation.
-     * @callback moduleapi/MonObjApi~addMonObjCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
+  /**
+   * Callback function to receive the result of the addMonObj operation.
+   * @callback moduleapi/MonObjApi~addMonObjCallback
+   * @param {String} error Error message, if any.
+   * @param data This operation does not return a value.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * Adds Monitored Objects
-     * Adds Monitored Objects to the system
-     * @param {Object} opts Optional parameters
-     * @param {module:model/MonObj} opts.body Inventory item to add
-     * @param {module:api/MonObjApi~addMonObjCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    addMonObj(opts, callback) {
-      opts = opts || {};
-      let postBody = opts['body'];
+  /**
+   * Adds Monitored Objects
+   * Adds Monitored Objects to the system
+   * @param {Object} opts Optional parameters
+   * @param {module:model/MonObj} opts.body Inventory item to add
+   * @param {module:api/MonObjApi~addMonObjCallback} callback The callback function, accepting three arguments: error, data, response
+   */
+  addMonObj(opts, callback) {
+    opts = opts || {};
+    let postBody = opts["body"];
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
-      let returnType = null;
+    let authNames = [];
+    let contentTypes = ["application/json"];
+    let accepts = [];
+    let returnType = null;
 
-      return this.apiClient.callApi(
-        '/MonObj', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
-     * Callback function to receive the result of the searchMonObj operation.
-     * @callback moduleapi/MonObjApi~searchMonObjCallback
-     * @param {String} error Error message, if any.
-     * @param {Array.<module:model/MonObj>{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
+    return this.apiClient.callApi(
+      "/MonObj",
+      "POST",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
+  /**
+   * Callback function to receive the result of the searchMonObj operation.
+   * @callback moduleapi/MonObjApi~searchMonObjCallback
+   * @param {String} error Error message, if any.
+   * @param {Array.<module:model/MonObj>{ data The data returned by the service call.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * searches Monitored Objects
-     * By passing in the appropriate options, you can search for available Monitoered Objects 
-     * @param {module:api/MonObjApi~searchMonObjCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
-     */
-    searchMonObj(callback) {
-      
-      let postBody = null;
+  /**
+   * searches Monitored Objects
+   * By passing in the appropriate options, you can search for available Monitoered Objects
+   * @param {module:api/MonObjApi~searchMonObjCallback} callback The callback function, accepting three arguments: error, data, response
+   * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+   */
+  searchMonObj(callback) {
+    let postBody = null;
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
-      let returnType = [MonObj];
+    let authNames = [];
+    let contentTypes = [];
+    let accepts = ["application/json"];
+    let returnType = [MonObj];
 
-      return this.apiClient.callApi(
-        '/MonObj', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
+    return this.apiClient.callApi(
+      "/MonObj",
+      "GET",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
 }
 
 /*
@@ -2486,13 +2507,12 @@ class MonObjApi {
  */
 
 /**
-* Province service.
-* @module api/ProvinceApi
-* @version 2.0.0
-*/
+ * Province service.
+ * @module api/ProvinceApi
+ * @version 2.0.0
+ */
 class ProvinceApi {
-
-    /**
+  /**
     * Constructs a new ProvinceApi. 
     * @alias module:api/ProvinceApi
     * @class
@@ -2500,96 +2520,96 @@ class ProvinceApi {
     * default to {@link module:ApiClient#instanc
     e} if unspecified.
     */
-    constructor(apiClient) {
-        this.apiClient = apiClient || ApiClient.instance;
-    }
+  constructor(apiClient) {
+    this.apiClient = apiClient || ApiClient.instance;
+  }
 
-    /**
-     * Callback function to receive the result of the addProvince operation.
-     * @callback moduleapi/ProvinceApi~addProvinceCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
+  /**
+   * Callback function to receive the result of the addProvince operation.
+   * @callback moduleapi/ProvinceApi~addProvinceCallback
+   * @param {String} error Error message, if any.
+   * @param data This operation does not return a value.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * Adds Province
-     * Adds Province to the system
-     * @param {Object} opts Optional parameters
-     * @param {module:model/Province} opts.body Inventory item to add
-     * @param {module:api/ProvinceApi~addProvinceCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    addProvince(opts, callback) {
-      opts = opts || {};
-      let postBody = opts['body'];
+  /**
+   * Adds Province
+   * Adds Province to the system
+   * @param {Object} opts Optional parameters
+   * @param {module:model/Province} opts.body Inventory item to add
+   * @param {module:api/ProvinceApi~addProvinceCallback} callback The callback function, accepting three arguments: error, data, response
+   */
+  addProvince(opts, callback) {
+    opts = opts || {};
+    let postBody = opts["body"];
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
-      let returnType = null;
+    let authNames = [];
+    let contentTypes = ["application/json"];
+    let accepts = [];
+    let returnType = null;
 
-      return this.apiClient.callApi(
-        '/Province', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
-     * Callback function to receive the result of the searchProvince operation.
-     * @callback moduleapi/ProvinceApi~searchProvinceCallback
-     * @param {String} error Error message, if any.
-     * @param {Array.<module:model/Province>{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
+    return this.apiClient.callApi(
+      "/Province",
+      "POST",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
+  /**
+   * Callback function to receive the result of the searchProvince operation.
+   * @callback moduleapi/ProvinceApi~searchProvinceCallback
+   * @param {String} error Error message, if any.
+   * @param {Array.<module:model/Province>{ data The data returned by the service call.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * searches Province
-     * By passing in the appropriate options, you can search for available Province 
-     * @param {module:api/ProvinceApi~searchProvinceCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
-     */
-    searchProvince(callback) {
-      
-      let postBody = null;
+  /**
+   * searches Province
+   * By passing in the appropriate options, you can search for available Province
+   * @param {module:api/ProvinceApi~searchProvinceCallback} callback The callback function, accepting three arguments: error, data, response
+   * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+   */
+  searchProvince(callback) {
+    let postBody = null;
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
-      let returnType = [Province];
+    let authNames = [];
+    let contentTypes = [];
+    let accepts = ["application/json"];
+    let returnType = [Province];
 
-      return this.apiClient.callApi(
-        '/Province', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
+    return this.apiClient.callApi(
+      "/Province",
+      "GET",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
 }
 
 /*
@@ -2609,13 +2629,12 @@ class ProvinceApi {
  */
 
 /**
-* SNMPCollector service.
-* @module api/SNMPCollectorApi
-* @version 2.0.0
-*/
+ * SNMPCollector service.
+ * @module api/SNMPCollectorApi
+ * @version 2.0.0
+ */
 class SNMPCollectorApi {
-
-    /**
+  /**
     * Constructs a new SNMPCollectorApi. 
     * @alias module:api/SNMPCollectorApi
     * @class
@@ -2623,96 +2642,96 @@ class SNMPCollectorApi {
     * default to {@link module:ApiClient#instanc
     e} if unspecified.
     */
-    constructor(apiClient) {
-        this.apiClient = apiClient || ApiClient.instance;
-    }
+  constructor(apiClient) {
+    this.apiClient = apiClient || ApiClient.instance;
+  }
 
-    /**
-     * Callback function to receive the result of the addSNMPCollector operation.
-     * @callback moduleapi/SNMPCollectorApi~addSNMPCollectorCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
+  /**
+   * Callback function to receive the result of the addSNMPCollector operation.
+   * @callback moduleapi/SNMPCollectorApi~addSNMPCollectorCallback
+   * @param {String} error Error message, if any.
+   * @param data This operation does not return a value.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * Adds SNMP Collector
-     * Adds SNMP Collector to the system
-     * @param {Object} opts Optional parameters
-     * @param {module:model/SNMPCollector} opts.body Inventory item to add SNMPcCollector
-     * @param {module:api/SNMPCollectorApi~addSNMPCollectorCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    addSNMPCollector(opts, callback) {
-      opts = opts || {};
-      let postBody = opts['body'];
+  /**
+   * Adds SNMP Collector
+   * Adds SNMP Collector to the system
+   * @param {Object} opts Optional parameters
+   * @param {module:model/SNMPCollector} opts.body Inventory item to add SNMPcCollector
+   * @param {module:api/SNMPCollectorApi~addSNMPCollectorCallback} callback The callback function, accepting three arguments: error, data, response
+   */
+  addSNMPCollector(opts, callback) {
+    opts = opts || {};
+    let postBody = opts["body"];
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
-      let returnType = null;
+    let authNames = [];
+    let contentTypes = ["application/json"];
+    let accepts = [];
+    let returnType = null;
 
-      return this.apiClient.callApi(
-        '/SNMPCollector', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
-     * Callback function to receive the result of the searchSNMPCollector operation.
-     * @callback moduleapi/SNMPCollectorApi~searchSNMPCollectorCallback
-     * @param {String} error Error message, if any.
-     * @param {Array.<module:model/SNMPCollector>{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
+    return this.apiClient.callApi(
+      "/SNMPCollector",
+      "POST",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
+  /**
+   * Callback function to receive the result of the searchSNMPCollector operation.
+   * @callback moduleapi/SNMPCollectorApi~searchSNMPCollectorCallback
+   * @param {String} error Error message, if any.
+   * @param {Array.<module:model/SNMPCollector>{ data The data returned by the service call.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * searches SNMP Collector
-     * By passing in the appropriate options, you can search for available SNMP Collectors 
-     * @param {module:api/SNMPCollectorApi~searchSNMPCollectorCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
-     */
-    searchSNMPCollector(callback) {
-      
-      let postBody = null;
+  /**
+   * searches SNMP Collector
+   * By passing in the appropriate options, you can search for available SNMP Collectors
+   * @param {module:api/SNMPCollectorApi~searchSNMPCollectorCallback} callback The callback function, accepting three arguments: error, data, response
+   * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+   */
+  searchSNMPCollector(callback) {
+    let postBody = null;
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
-      let returnType = [SNMPCollector];
+    let authNames = [];
+    let contentTypes = [];
+    let accepts = ["application/json"];
+    let returnType = [SNMPCollector];
 
-      return this.apiClient.callApi(
-        '/SNMPCollector', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
+    return this.apiClient.callApi(
+      "/SNMPCollector",
+      "GET",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
 }
 
 /*
@@ -2732,13 +2751,12 @@ class SNMPCollectorApi {
  */
 
 /**
-* SNMPMIB service.
-* @module api/SNMPMIBApi
-* @version 2.0.0
-*/
+ * SNMPMIB service.
+ * @module api/SNMPMIBApi
+ * @version 2.0.0
+ */
 class SNMPMIBApi {
-
-    /**
+  /**
     * Constructs a new SNMPMIBApi. 
     * @alias module:api/SNMPMIBApi
     * @class
@@ -2746,96 +2764,96 @@ class SNMPMIBApi {
     * default to {@link module:ApiClient#instanc
     e} if unspecified.
     */
-    constructor(apiClient) {
-        this.apiClient = apiClient || ApiClient.instance;
-    }
+  constructor(apiClient) {
+    this.apiClient = apiClient || ApiClient.instance;
+  }
 
-    /**
-     * Callback function to receive the result of the addSNMPMIB operation.
-     * @callback moduleapi/SNMPMIBApi~addSNMPMIBCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
+  /**
+   * Callback function to receive the result of the addSNMPMIB operation.
+   * @callback moduleapi/SNMPMIBApi~addSNMPMIBCallback
+   * @param {String} error Error message, if any.
+   * @param data This operation does not return a value.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * Adds SNMPMIB
-     * Adds SNMP MIBs to the system
-     * @param {Object} opts Optional parameters
-     * @param {module:model/SNMPMIB} opts.body Inventory item to add
-     * @param {module:api/SNMPMIBApi~addSNMPMIBCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    addSNMPMIB(opts, callback) {
-      opts = opts || {};
-      let postBody = opts['body'];
+  /**
+   * Adds SNMPMIB
+   * Adds SNMP MIBs to the system
+   * @param {Object} opts Optional parameters
+   * @param {module:model/SNMPMIB} opts.body Inventory item to add
+   * @param {module:api/SNMPMIBApi~addSNMPMIBCallback} callback The callback function, accepting three arguments: error, data, response
+   */
+  addSNMPMIB(opts, callback) {
+    opts = opts || {};
+    let postBody = opts["body"];
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
-      let returnType = null;
+    let authNames = [];
+    let contentTypes = ["application/json"];
+    let accepts = [];
+    let returnType = null;
 
-      return this.apiClient.callApi(
-        '/SNMPMIB', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
-     * Callback function to receive the result of the searchSNMPMIB operation.
-     * @callback moduleapi/SNMPMIBApi~searchSNMPMIBCallback
-     * @param {String} error Error message, if any.
-     * @param {Array.<module:model/SNMPMIB>{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
+    return this.apiClient.callApi(
+      "/SNMPMIB",
+      "POST",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
+  /**
+   * Callback function to receive the result of the searchSNMPMIB operation.
+   * @callback moduleapi/SNMPMIBApi~searchSNMPMIBCallback
+   * @param {String} error Error message, if any.
+   * @param {Array.<module:model/SNMPMIB>{ data The data returned by the service call.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * searches SNMP MIB
-     * By passing in the appropriate options, you can search for available SNMP MIBs 
-     * @param {module:api/SNMPMIBApi~searchSNMPMIBCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
-     */
-    searchSNMPMIB(callback) {
-      
-      let postBody = null;
+  /**
+   * searches SNMP MIB
+   * By passing in the appropriate options, you can search for available SNMP MIBs
+   * @param {module:api/SNMPMIBApi~searchSNMPMIBCallback} callback The callback function, accepting three arguments: error, data, response
+   * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+   */
+  searchSNMPMIB(callback) {
+    let postBody = null;
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
-      let returnType = [SNMPMIB];
+    let authNames = [];
+    let contentTypes = [];
+    let accepts = ["application/json"];
+    let returnType = [SNMPMIB];
 
-      return this.apiClient.callApi(
-        '/SNMPMIB', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
+    return this.apiClient.callApi(
+      "/SNMPMIB",
+      "GET",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
 }
 
 /*
@@ -2855,13 +2873,12 @@ class SNMPMIBApi {
  */
 
 /**
-* Vendor service.
-* @module api/VendorApi
-* @version 2.0.0
-*/
+ * Vendor service.
+ * @module api/VendorApi
+ * @version 2.0.0
+ */
 class VendorApi {
-
-    /**
+  /**
     * Constructs a new VendorApi. 
     * @alias module:api/VendorApi
     * @class
@@ -2869,96 +2886,96 @@ class VendorApi {
     * default to {@link module:ApiClient#instanc
     e} if unspecified.
     */
-    constructor(apiClient) {
-        this.apiClient = apiClient || ApiClient.instance;
-    }
+  constructor(apiClient) {
+    this.apiClient = apiClient || ApiClient.instance;
+  }
 
-    /**
-     * Callback function to receive the result of the addVendor operation.
-     * @callback moduleapi/VendorApi~addVendorCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
+  /**
+   * Callback function to receive the result of the addVendor operation.
+   * @callback moduleapi/VendorApi~addVendorCallback
+   * @param {String} error Error message, if any.
+   * @param data This operation does not return a value.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * Adds Monitored Objects
-     * Adds Monitored Objects to the system
-     * @param {Object} opts Optional parameters
-     * @param {module:model/Vendor} opts.body Inventory item to add
-     * @param {module:api/VendorApi~addVendorCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    addVendor(opts, callback) {
-      opts = opts || {};
-      let postBody = opts['body'];
+  /**
+   * Adds Monitored Objects
+   * Adds Monitored Objects to the system
+   * @param {Object} opts Optional parameters
+   * @param {module:model/Vendor} opts.body Inventory item to add
+   * @param {module:api/VendorApi~addVendorCallback} callback The callback function, accepting three arguments: error, data, response
+   */
+  addVendor(opts, callback) {
+    opts = opts || {};
+    let postBody = opts["body"];
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
-      let returnType = null;
+    let authNames = [];
+    let contentTypes = ["application/json"];
+    let accepts = [];
+    let returnType = null;
 
-      return this.apiClient.callApi(
-        '/Vendor', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
-     * Callback function to receive the result of the searchVendor operation.
-     * @callback moduleapi/VendorApi~searchVendorCallback
-     * @param {String} error Error message, if any.
-     * @param {Array.<module:model/Vendor>{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
+    return this.apiClient.callApi(
+      "/Vendor",
+      "POST",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
+  /**
+   * Callback function to receive the result of the searchVendor operation.
+   * @callback moduleapi/VendorApi~searchVendorCallback
+   * @param {String} error Error message, if any.
+   * @param {Array.<module:model/Vendor>{ data The data returned by the service call.
+   * @param {String} response The complete HTTP response.
+   */
 
-    /**
-     * searches Vendors
-     * By passing in the appropriate options, you can search for available Vendors 
-     * @param {module:api/VendorApi~searchVendorCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
-     */
-    searchVendor(callback) {
-      
-      let postBody = null;
+  /**
+   * searches Vendors
+   * By passing in the appropriate options, you can search for available Vendors
+   * @param {module:api/VendorApi~searchVendorCallback} callback The callback function, accepting three arguments: error, data, response
+   * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+   */
+  searchVendor(callback) {
+    let postBody = null;
 
-      let pathParams = {
-        
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+    let pathParams = {};
+    let queryParams = {};
+    let headerParams = {};
+    let formParams = {};
 
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
-      let returnType = [Vendor];
+    let authNames = [];
+    let contentTypes = [];
+    let accepts = ["application/json"];
+    let returnType = [Vendor];
 
-      return this.apiClient.callApi(
-        '/Vendor', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
+    return this.apiClient.callApi(
+      "/Vendor",
+      "GET",
+      pathParams,
+      queryParams,
+      headerParams,
+      formParams,
+      postBody,
+      authNames,
+      contentTypes,
+      accepts,
+      returnType,
+      callback
+    );
+  }
 }
 
 exports.AllOfDeviceSNMPCollector = AllOfDeviceSNMPCollector;
