@@ -22,7 +22,7 @@ jobs:
 
     # You can just reference the main branch if you want but since we added release we will use that
    
-    uses: EmadDawoud/meerkat-auto-client-app/.github/workflows/integration.yml
+    uses: EmadDawoud/meerkat-auto-client-app/.github/workflows/integration.yml@master
     permissions:
       contents: read
       checks: write
