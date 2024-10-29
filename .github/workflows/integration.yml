@@ -37,5 +37,5 @@ jobs:
         with:
           repository: EmadDawoud/meerkat-auto-client-app
           event-type: trigger-integration
-          #token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.REMOTE_REPO_TOKEN }}
 
