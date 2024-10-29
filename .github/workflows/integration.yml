@@ -22,7 +22,20 @@ jobs:
 
     # You can just reference the main branch if you want but since we added release we will use that
    
-    uses: EmadDawoud/meerkat-auto-client-app/.github/workflows/integration.yml@master
-    permissions:
-      contents: read
-      checks: write
+#    uses: EmadDawoud/meerkat-auto-client-app/.github/workflows/integration.yml@master
+ #   permissions:
+  #    contents: read
+   #   checks: write
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current repo
+        uses: actions/checkout@v2
+
+      - name: Trigger remote integration workflow
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          repository: EmadDawoud/meerkat-auto-client-app
+          event-type: trigger-integration
+          token: ${{ secrets.GITHUB_TOKEN }}
+
