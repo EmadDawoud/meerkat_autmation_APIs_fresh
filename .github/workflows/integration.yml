@@ -36,6 +36,6 @@ jobs:
         uses: peter-evans/repository-dispatch@v2
         with:
           repository: EmadDawoud/meerkat-auto-client-app
-          event-type: trigger-integration
+          event-type: trigger-build
           token: ${{ secrets.REMOTE_REPO_TOKEN }}
 
